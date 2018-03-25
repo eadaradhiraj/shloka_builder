@@ -7,6 +7,7 @@
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
   <script type="text/javascript" src="sanscript.js"></script>
   <script type="text/javascript" src="syllabaliser.js"></script>
+  <script type="text/javascript" src="short_sounds.js"></script>
 
 
   <style>
@@ -486,8 +487,7 @@
       var $row = $('<tr></tr>').appendTo($table);
       $(sylls).each(function(index, value){
         if(index==4 || index==12 || index==14 || index>15) {
-          v = Sanscript.t(value,'devanagari', 'iast');
-          if(v.length==2 && !(index>15) && (v.endsWith("a") || v.endsWith("i") || v.endsWith("u") || v.endsWith("ṛ") || v.endsWith("l̥"))){
+          if(short_sounds.contains(value)){
             $('<td></td>').attr({class:"col-md-1", bgcolor:"#00FF00"}).text(value).appendTo($row);
           }
           else{
