@@ -487,7 +487,7 @@
       var $row = $('<tr></tr>').appendTo($table);
       $(sylls).each(function(index, value){
         if(index==4 || index==12 || index==14 || index>15) {
-          if(short_sounds.contains(value)){
+          if(short_sounds.contains(value) && index<15){
             $('<td></td>').attr({class:"col-md-1", bgcolor:"#00FF00"}).text(value).appendTo($row);
           }
           else{
