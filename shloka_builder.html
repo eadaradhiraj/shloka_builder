@@ -85,6 +85,13 @@
         } else if (b)
           res = a + ' ' + b
       }
+      
+      //sa+visarga final
+      else if (a.match(/saḥ$/)) {
+        if (b.match(/^s/)) {
+          res = a.slice(0, -1) + ' ' + b
+        }
+      }
 
       //a+visarga final
       else if (a.match(/aḥ$/)) {
@@ -128,13 +135,7 @@
         }
       }
 
-      //āḥ final
-      else if (a.match(/āḥ$/)) {
-        if (b.match(/^s/)) {
-          res = a.slice(0, -1) + ' ' + b
-        }
-      }
-      
+      //āḥ final      
       else if (a.match(/āḥ$/)) {
         if (b.match(/^ā/) || b.match(/^ai/) ||
           b.match(/^au/) ||
