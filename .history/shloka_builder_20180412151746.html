@@ -3,12 +3,9 @@
 
 <head>
 
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet">
-  
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script> -->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>	
   <script type="text/javascript" src="https://realization.org/p/topics/transliterator/sanscript.js"></script>
   <script type="text/javascript" src="syllabaliser.js"></script>
   <script type="text/javascript" src="short_sounds.js"></script>
@@ -17,7 +14,7 @@
   <style>
     .flex-container {
       display: flex;
-      flex-wrap: row wrap;
+      flex-wrap: nowrap;
       background-color: DodgerBlue;
     }
 
@@ -49,21 +46,18 @@
       margin: 0;
       max-width: 100%;
     }
+
   </style>
 </head>
 
 <body>
 
   <button id="add_item" class="ui-button ui-widget ui-corner-all">A button element</button>
-  <div class="flex-container">
+  <div class="flex-container justify-content-around">
 
   </div>
-  <h6>syllables:
-    <table id="syllables" class="table table-bordered"></table>
-  </h6>
-  <h6>number:
-    <span id="number"></span>
-  </h6>
+  <h6>syllables: <table id="syllables" class="table table-bordered"></table></h6>
+  <h6>number: <span id="number"></span></h6>
 
   <textarea id='result_text' maxlength="250" readonly></textarea>
   <script>
@@ -92,13 +86,12 @@
         } else if (b)
           res = a + ' ' + b
       }
-
+      
       //sa+visarga final
-      else if (a.match(/saḥ$/) || a.match(/eṣaḥ$/) &&
-        (
-          b.match(/^s/) || b.match(/^b/) || b.match(/^d/) || b.match(/^g/) || b.match(/^k/) || b.match(/^i/) || b.match(/^t/) || b.match(/^p/)
-        )) {
-        res = a.slice(0, -1) + ' ' + b
+      else if (a.match(/saḥ$/)) {
+        if (b.match(/^s/)) {
+          res = a.slice(0, -1) + ' ' + b
+        }
       }
 
       //a+visarga final
@@ -465,10 +458,6 @@
         }
       }
 
-      else{
-        res = a + ' ' + b
-      }
-
       retObj.word = res
       //console.log(retObj);
       return retObj
@@ -504,23 +493,17 @@
 
       $table.empty();
       var $row = $('<tr></tr>').appendTo($table);
-      $(sylls).each(function (index, value) {
-        if (index == 4 || index == 12 || index == 14 || index > 15) {
-          if (short_sounds.contains(value) && index < 15) {
-            $('<td></td>').attr({
-              class: "col-md-1",
-              bgcolor: "#00FF00"
-            }).text(value).appendTo($row);
-          } else {
-            $('<td></td>').attr({
-              class: "col-md-1",
-              bgcolor: "#FF0000"
-            }).text(value).appendTo($row);
+      $(sylls).each(function(index, value){
+        if(index==4 || index==12 || index==14 || index>15) {
+          if(short_sounds.contains(value) && index<15){
+            $('<td></td>').attr({class:"col-md-1", bgcolor:"#00FF00"}).text(value).appendTo($row);
           }
-        } else {
-          $('<td></td>').attr({
-            class: "col-md-1"
-          }).text(value).appendTo($row);
+          else{
+            $('<td></td>').attr({class:"col-md-1", bgcolor:"#FF0000"}).text(value).appendTo($row);
+          }
+        }
+        else {
+          $('<td></td>').attr({class:"col-md-1"}).text(value).appendTo($row);
         }
       });
     };
@@ -563,6 +546,7 @@
       $(this).parent().remove();
       updateResult();
     });
+
   </script>
 </body>
 
