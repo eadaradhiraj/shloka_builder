@@ -154,7 +154,7 @@ function sandhi_join(arrs) {
             if (["t", "T"].includes(rhst.slice(0, 1))) {
                 tTvisdict = { "t": "s", "T": "S" }
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + tTvisdict[rhst.slice(0, 1)] + rhst)
-            } else if (["a", "A", "i", "I", "u", "U", "o", "y", "l", "r", "h", "v", "m", "n", "b", 'g', "j", "d"].includes(rhst.slice(0, 1))) {
+            } else if (["a", "A", "i", "I", "u", "U", "e", "o", "y", "l", "r", "h", "v", "m", "n", "b", 'g', "j", "d"].includes(rhst.slice(0, 1))) {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "r" + rhst)
             } else if (["c"].includes(rhst.slice(0, 1))) {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "z" + rhst)
