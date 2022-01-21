@@ -119,8 +119,10 @@ function sandhi_join(arrs) {
                 result = pushjoin(result, rhs["prop"], lhst + " " + rhst)
             }
         } else if (lhst.slice(-2) == "aH") {
-            
-            if (rhst.slice(0, 1) == "a") {
+
+            if ( (lhs["prop"] == "r-ending") && (rhst.slice(0, 1) == "r") ) {
+                result = pushjoin(result, rhs["prop"], lhst.slice(0, -2) + "A " + rhst)
+            } else if (rhst.slice(0, 1) == "a") {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -2) + "o'" + rhst.slice(1))
             } else if (["i", "u", "U", "A"].includes(rhst.slice(0, 1))) {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + " " + rhst)
@@ -154,8 +156,11 @@ function sandhi_join(arrs) {
             if (["t", "T"].includes(rhst.slice(0, 1))) {
                 tTvisdict = { "t": "s", "T": "S" }
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + tTvisdict[rhst.slice(0, 1)] + rhst)
-            } else if (["a", "A", "i", "I", "u", "U", "e", "o", "y", "l", "r", "h", "v", "m", "n", "b", 'g', "j", "d"].includes(rhst.slice(0, 1))) {
+            } else if (["a", "A", "i", "I", "u", "U", "o", "y", "l", "h", "v", "m", "n", "e", "b", 'g', "j", "d"].includes(rhst.slice(0, 1))) {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "r" + rhst)
+            } else if (["i", "u", "e"].includes(lhst.slice(-2,-1)) && ["r"].includes(rhst.slice(0, 1))) {
+                iudict = {"i": "I ", "u":"U ", "e":"e "}
+                result = pushjoin(result, rhs["prop"], lhst.slice(0, -2) + iudict[lhst.slice(-2,-1)] + rhst)
             } else if (["c"].includes(rhst.slice(0, 1))) {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "z" + rhst)
             } else {
@@ -174,7 +179,7 @@ function sandhi_join(arrs) {
             } else if (["h"].includes(rhst.slice(0, 1))) {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "DD" + rhst)
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "D " + rhst)
-            } else if ((["n"].includes(rhst.slice(0, 1))) && (["names", "cities"].includes(rhs["prop"]))) {
+            } else if ((["n"].includes(rhst.slice(0, 1))) && (["nAma", "nagara"].includes(rhs["prop"]))) {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "NN" + rhst.slice(1))
             } else if (nasal_sounds.includes(rhst.slice(0, 1))) {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "N" + rhst)
