@@ -17,7 +17,7 @@ function sandhi_join(arrs) {
         rhst = rhs["st"]
 
         if (((lhst.endsWith('saH') || (lhst.endsWith('eSaH')) && (lhs["prop"] == "pronoun")))) {
-            if (["c", "d", "D", "h", "k", "l", "m", "b", "n", "p", "h", "t", "T", "v", "A"].includes(rhs["st"][0])) {
+            if (["e", "o", "i", "I", "u", "U", "c", "d", "D", "h", "k", "l", "m", "b", "n", "p", "h", "t", "T", "v", "A"].includes(rhs["st"][0])) {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + " " + rhst)
             } else if (["a"].includes(rhs["st"][0])) {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -2) + "o'" + rhst.slice(1))
@@ -124,7 +124,7 @@ function sandhi_join(arrs) {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -2) + "A " + rhst)
             } else if (rhst.slice(0, 1) == "a") {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -2) + "o'" + rhst.slice(1))
-            } else if (["i", "u", "U", "A"].includes(rhst.slice(0, 1))) {
+            } else if (["e", "o", "i", "u", "U", "A"].includes(rhst.slice(0, 1))) {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + " " + rhst)
             } else if (["c"].includes(rhst.slice(0, 1))) {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "z" + rhst)
@@ -140,7 +140,7 @@ function sandhi_join(arrs) {
         } else if (lhst.slice(-2) == "AH") {
             if (rhst.slice(0, 1) == "a") {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + " " + rhst)
-            } else if (["i", "u", "U", "A"].includes(rhst.slice(0, 1))) {
+            } else if (["e", "o", "i", "u", "U", "A"].includes(rhst.slice(0, 1))) {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + " " + rhst)
             } else if (["y", "l", "r", "h", "v", "m", "n", "b", 'g', "j", "d"].includes(rhst.slice(0, 1))) {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + " " + rhst)

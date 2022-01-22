@@ -12,8 +12,6 @@ function laghu_or_dirgha (sylls, pos, lorg) {
 }
 
 function create_table(sylls) {
-    $('#here_table').empty();
-
     var metre_dict = {
         "anushtup": {
             5: laghu_or_dirgha(sylls, 5, "l"),
@@ -50,7 +48,7 @@ function create_table(sylls) {
         }
     }
 
-    var content = "<table class='table'><tr>"
+    var content = "<table class='table res_table'><tr>"
     for (i = 0; i < sylls.length; i++) {
         content += `<td class=${metre_dict[$("#metres").val()][i+1]}>` + sylls[i] + '</td>';
     }
@@ -83,7 +81,7 @@ function loop_objs() {
     }
     result = join_all_sandhi(arrs)
     $(".result").remove()
-
+    $(".res_table").remove();
     for (var i = 0; i < result.length; i++) {
         create_textare(i, res[i]["st"])
     }
