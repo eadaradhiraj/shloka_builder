@@ -16,7 +16,7 @@ function sandhi_join(arrs) {
         lhst = lhs["st"]
         rhst = rhs["st"]
 
-        if (((lhst.endsWith('saH') || (lhst.endsWith('eSaH')) && (lhs["prop"] == "pronoun")))) {
+        if (( ((lhst.endsWith('saH') || (lhst.endsWith('eSaH')) ) && (lhs["prop"] == "pronoun")))) {
             if (["e", "o", "i", "I", "u", "U", "c", "d", "D", "h", "k", "l", "m", "b", "n", "p", "h", "t", "T", "v", "A"].includes(rhs["st"][0])) {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + " " + rhst)
             } else if (["a"].includes(rhs["st"][0])) {
@@ -119,7 +119,6 @@ function sandhi_join(arrs) {
                 result = pushjoin(result, rhs["prop"], lhst + " " + rhst)
             }
         } else if (lhst.slice(-2) == "aH") {
-
             if ( (lhs["prop"] == "r-ending") && (rhst.slice(0, 1) == "r") ) {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -2) + "A " + rhst)
             } else if (rhst.slice(0, 1) == "a") {
