@@ -8,9 +8,9 @@ function shiftch2aft(arr, si) {
   return arr
 }
 
-function swap(json){
+function swap(json) {
   var ret = {};
-  for(var key in json){
+  for (var key in json) {
     ret[json[key]] = key;
   }
   return ret;
@@ -18,14 +18,14 @@ function swap(json){
 
 function allreplace(retStr, obj) {
   for (var x in obj) {
-      retStr = retStr.replace(new RegExp(x, 'g'), obj[x]);
+    retStr = retStr.replace(new RegExp(x, 'g'), obj[x]);
   }
   return retStr
 }
 
-function inverse(obj){
+function inverse(obj) {
   var retobj = {};
-  for(var key in obj){
+  for (var key in obj) {
     retobj[obj[key]] = key;
   }
   return retobj;
@@ -33,7 +33,7 @@ function inverse(obj){
 
 
 function syllabalize(st) {
-  var mahapranas = {"kh":"K", "gh": "Q", "ch": "C", "jh":"Z", "Th": "V", "Dh": "X", "th": "Y", "dh":"F", "pha":"P", "bh":"B"}
+  var mahapranas = { "kh": "K", "gh": "Q", "ch": "C", "jh": "Z", "Th": "V", "Dh": "X", "th": "Y", "dh": "F", "pha": "P", "bh": "B" }
   //arr will hold the array of syllables and the first is initialised
   st = allreplace(st, mahapranas)
   var arr = [""]
@@ -45,30 +45,34 @@ function syllabalize(st) {
     //c will hold each character in the string
     c = st[i]
     //character will be appended to the current item in array
-    arr[si] += c
-    //In case the character is not a vowel
-    if (!vowels.includes(c)) {
-      if (split_next == true) {
-        //split and create next item in array
-        si += 1
-        arr.push("")
-        split_next = false
-      } else if ((c == "h") && ( arr.length > 1 ) ) {
-        //in case of mahaprANa consonants shift the character to prev array item
-        if (vowels.includes(arr[si - 1])) {
+    // it should not be space or the next character should be a vowel
+    if ((c != ' ') || (vowels.includes(st[i + 1]))) {
+      arr[si] += c
+
+      //In case the character is not a vowel
+      if (!vowels.includes(c)) {
+        if (split_next == true) {
+          //split and create next item in array
+          si += 1
+          arr.push("")
+          split_next = false
+        } else if ((c == "h") && (arr.length > 1)) {
           //in case of mahaprANa consonants shift the character to prev array item
-          if (vowels.includes(arr[si].slice(0,1))) {
-            arr = shiftch2aft(arr, si)
+          if (vowels.includes(arr[si - 1])) {
+            //in case of mahaprANa consonants shift the character to prev array item
+            if (vowels.includes(arr[si].slice(0, 1))) {
+              arr = shiftch2aft(arr, si)
+            }
           }
         }
+      } else {
+        if ((arr[si].length == 1 && arr[si - 1] != undefined)) {
+          //in case reaching end of string shift the character to prev array item
+          arr = shiftch2aft(arr, si)
+        }
+        //split because vowel has come
+        split_next = true
       }
-    } else {
-      if ((arr[si].length == 1 && arr[si - 1] != undefined)) {
-        //in case reaching end of string shift the character to prev array item
-        arr = shiftch2aft(arr, si)
-      }
-      //split because vowel has come
-      split_next = true
     }
   }
   // Remove empty items in the array and trim them
@@ -76,7 +80,7 @@ function syllabalize(st) {
   for (var i = 0; i < arr.length; i++) {
     arri = arr[i]
     if (arri != "") {
-      res_arr.push( allreplace(arri.trim(), inverse(mahapranas)) )
+      res_arr.push(allreplace(arri.trim(), inverse(mahapranas)))
     }
   }
   return res_arr
