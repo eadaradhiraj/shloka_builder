@@ -315,6 +315,8 @@ function sandhi_join(arrs) {
                 } else {
                     result = pushjoin(result, rhs["prop"], lhst + " " + rhst)
                 }
+            } else if (["l"].includes(rhst.slice(0, 1))) {
+                result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "l" + rhst)
             } else if (nasal_sounds.includes(rhst.slice(0, 1))) {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "n" + rhst)
             } else if (["c"].includes(rhst.slice(0, 1))) {
