@@ -1,4 +1,4 @@
-const short_vowels = ["a", "u", "i"]
+const short_vowels = ["a", "u", "i", "R"]
 const vowels = ["a", "A", "i", "I", "u", "U", "e", "o", "R", "'"]
 
 function shiftch2aft(arr, si) {
