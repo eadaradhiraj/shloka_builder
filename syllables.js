@@ -1,5 +1,6 @@
 const short_vowels = ["a", "u", "i", "R"]
 const vowels = ["a", "A", "i", "I", "u", "U", "e", "o", "R", "'"]
+const mahapranas = { "kh": "K", "gh": "Q", "ch": "C", "jh": "Z", "Th": "V", "Dh": "X", "th": "Y", "dh": "F", "pha": "P", "bh": "B" }
 
 function shiftch2aft(arr, si) {
   //shift character in item to previous in array
@@ -33,7 +34,6 @@ function inverse(obj) {
 
 
 function syllabalize(st) {
-  let mahapranas = { "kh": "K", "gh": "Q", "ch": "C", "jh": "Z", "Th": "V", "Dh": "X", "th": "Y", "dh": "F", "pha": "P", "bh": "B" }
   //arr will hold the array of syllables and the first is initialised
   st = allreplace(st, mahapranas)
   let arr = [""]
