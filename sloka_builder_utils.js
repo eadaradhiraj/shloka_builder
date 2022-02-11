@@ -12,7 +12,7 @@ function laghu_or_dirgha (sylls, pos, lorg) {
 }
 
 function create_table(sylls) {
-    var metre_dict = {
+    let metre_dict = {
         "anushtup": {
             5: laghu_or_dirgha(sylls, 5, "l"),
             6: laghu_or_dirgha(sylls, 6, "d"),
@@ -48,42 +48,42 @@ function create_table(sylls) {
         }
     }
 
-    var content = "<table class='table res_table'><tr>"
-    for (i = 0; i < sylls.length; i++) {
+    let content = "<table class='table res_table'><tr>"
+    for (let i = 0; i < sylls.length; i++) {
         content += `<td class=${metre_dict[$("#metres").val()][i+1]}>` + sylls[i] + '</td>';
     }
     content += '</tr><tr>'
-    for (i = 0; i < sylls.length; i++) {
+    for (let i = 0; i < sylls.length; i++) {
         content += '<td>' + (i + 1) + '</td>';
     }
     content += "</tr></table>"
     $('#here_table').append(content);
 }
 function create_textare(it, txt) {
-    var sylls = syllabalize(txt)
+    let sylls = syllabalize(txt)
     create_table(sylls)
-    html_code = `<input id="result${it}" class="form-control result" value="${txt}" type="text" readonly>`
-    $("#results").append(html_code)
+    $("#results").append(
+        `<input id="result${it}" class="form-control result" value="${txt}" type="text" readonly>`
+    )
 }
 function loop_objs() {
-    arrs = []
+    let arrs = []
     $('.list-group-item').each(function (_, li) {
-
-        st = $(li).find(".word").val()
-
-        prop = $(li).find(".prop").val()
-
-        arrs.push({ "st": st, "prop": prop })
-
+        arrs.push(
+            {
+                "st": $(li).find(".word").val(),
+                "prop": $(li).find(".prop").val()
+            }
+        )
     });
     if (arrs.length == 1) {
         alert("You have only one word!! Enter one more at least.")
     }
-    result = join_all_sandhi(arrs)
+    let result = join_all_sandhi(arrs)
     $(".result").remove()
     $(".res_table").remove();
-    for (var i = 0; i < result.length; i++) {
-        create_textare(i, res[i]["st"])
+    for (let i = 0; i < result.length; i++) {
+        create_textare(i, result[i])
     }
 
 }

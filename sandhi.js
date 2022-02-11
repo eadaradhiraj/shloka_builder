@@ -1,6 +1,6 @@
 function pushjoin(result, prop, st) {
     //Putting repetitive code into a function
-    join = { "st": "", "prop": null }
+    let join = { "st": "", "prop": null }
     join["st"] = st
     join["prop"] = prop
     result.push(join)
@@ -8,13 +8,13 @@ function pushjoin(result, prop, st) {
 }
 
 function sandhi_join(arrs) {
-    nasal_sounds = ["n", "m", "J", "G", "N"]
-    result = []
-    for (var i = 0; i < arrs.length; i++) {
-        lhs = arrs[i].lhs
-        rhs = arrs[i].rhs
-        lhst = lhs["st"]
-        rhst = rhs["st"]
+    let nasal_sounds = ["n", "m", "J", "G", "N"]
+    let result = []
+    for (let i = 0; i < arrs.length; i++) {
+        let lhs = arrs[i].lhs
+        let rhs = arrs[i].rhs
+        let lhst = lhs["st"]
+        let rhst = rhs["st"]
 
         if (( ((lhst.endsWith('saH') || (lhst.endsWith('eSaH')) ) && (lhs["prop"] == "pronoun")))) {
             if (["e", "o", "i", "I", "u", "U", "c", "d", "D", "h", "k", "l", "m", "b", "n", "p", "h", "t", "T", "v", "A"].includes(rhs["st"][0])) {
@@ -45,7 +45,7 @@ function sandhi_join(arrs) {
         } else if (["ai", "au"].includes(lhst.slice(-2))) {
 
             if ((["a", "A", "i", "I", "u", "U", "e", "o", "R"].includes(rhst.slice(0, 1)))) {
-                aiudict = { "ai": "y", "au": "v" }
+                const aiudict = { "ai": "y", "au": "v" }
     
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -2) + "A" + aiudict[lhst.slice(-2)] + rhst)
 
@@ -54,8 +54,8 @@ function sandhi_join(arrs) {
                 result = pushjoin(result, rhs["prop"], lhst + " " + rhst)
             }
         } else if (["A", "a"].includes(lhst.slice(-1))) {
-
-            adict = { "A": "A", "a": "A", "i": "e", "I": "e", "u": "o", "U": "o", "R": "ar", "e": "ai", "o": "u" }
+            let jst;
+            const adict = { "A": "A", "a": "A", "i": "e", "I": "e", "u": "o", "U": "o", "R": "ar", "e": "ai", "o": "u" }
             if (["ai", "au"].includes(rhst.slice(0, 2))) {
                 jst = lhst.slice(0, -1) + rhs["st"]
             } else if (Object.keys(adict).includes(rhst.slice(0, 1))) {
@@ -67,8 +67,8 @@ function sandhi_join(arrs) {
             result = pushjoin(result, rhs["prop"], jst)
 
         } else if (["i", "I"].includes(lhst.slice(-1))) {
-            vowelarr = ["a", "A", "e", "o", "R", "u", "U"]
-
+            let vowelarr = ["a", "A", "e", "o", "R", "u", "U"]
+            let jst;
             if ((vowelarr.includes(rhst.slice(0, 1))) && (lhs["prop"] != "dual")) {
                 jst = lhst.slice(0, -1) + "y" + rhs["st"]
             } else if (["i", "I"].includes(rhst.slice(0, 1)) && (lhs["prop"] != "dual")) {
@@ -81,7 +81,7 @@ function sandhi_join(arrs) {
 
         } else if (["u", "U"].includes(lhst.slice(-1))) {
 
-            vowelarr = ["a", "A", "e", "o", "R", "u", "U"]
+            const vowelarr = ["a", "A", "e", "o", "R", "u", "U"]
 
             if ((vowelarr.includes(rhst.slice(0, 1))) && (lhs["prop"] != "dual")) {
                 jst = lhst.slice(0, -1) + "v" + rhs["st"]
@@ -93,22 +93,15 @@ function sandhi_join(arrs) {
 
             result = pushjoin(result, rhs["prop"], jst)
         } else if (["e", "o"].includes(lhst.slice(-1))) {
-            join = { "st": "", "prop": null }
+
             if (["au", "ai"].includes(rhst.slice(0, 2))) {
-
+                const auieodict = { "o": "v", "e": "y" }
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "a " + rhst)
-
-                auieodict = { "o": "v", "e": "y" }
-
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "a" + auieodict[lhst.slice(-1)] + rhst)
             } else if (["i", "I", "u", "U", "e", "o", "R"].includes(rhst.slice(0, 1))) {
-
-                aiudict = { "e": "y", "o": "v" }
-
+                const aiudict = { "e": "y", "o": "v" }
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "a" + aiudict[lhst.slice(-1)] + rhst)
-
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "a " + rhst)
-
             } else if (rhst.slice(0, 1) == "a") {
                 result = pushjoin(result, rhs["prop"], lhst + "'" + rhst.slice(1))
             } else if (rhst.slice(0, 1) == "A") {
@@ -153,12 +146,12 @@ function sandhi_join(arrs) {
             }
         } else if (lhst.slice(-1) == "H") {
             if (["t", "T"].includes(rhst.slice(0, 1))) {
-                tTvisdict = { "t": "s", "T": "S" }
+                const tTvisdict = { "t": "s", "T": "S" }
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + tTvisdict[rhst.slice(0, 1)] + rhst)
             } else if (["a", "A", "i", "I", "u", "U", "o", "y", "l", "h", "v", "m", "n", "e", "b", 'g', "j", "d"].includes(rhst.slice(0, 1))) {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "r" + rhst)
             } else if (["i", "u", "e"].includes(lhst.slice(-2,-1)) && ["r"].includes(rhst.slice(0, 1))) {
-                iudict = {"i": "I ", "u":"U ", "e":"e "}
+                const iudict = {"i": "I ", "u":"U ", "e":"e "}
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -2) + iudict[lhst.slice(-2,-1)] + rhst)
             } else if (["c"].includes(rhst.slice(0, 1))) {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "z" + rhst)
@@ -468,26 +461,24 @@ function sandhi_join(arrs) {
         } else {
             result = pushjoin(result, rhs["prop"], lhst + " " + rhst)
         }
-
     }
-
     return result
 }
 
 function join_all_sandhi(arrs) {
     // Do the first one
-    res = sandhi_join(
+    let res = sandhi_join(
         [{ "lhs": arrs[0], "rhs": arrs[1] }]
     )
     // Initialize resultant string
-    result_string = []
+    let result_string = []
 
     // Loop through all the words
-    for (var i = 2; i < arrs.length; i++) {
+    for (let i = 2; i < arrs.length; i++) {
         // initialize new array to store multiple results
         resn = []
         // if results are multiple then iterate once again
-        for (var j = 0; j < res.length; j++) {
+        for (let j = 0; j < res.length; j++) {
             //append the new array
             Array.prototype.push.apply(resn, sandhi_join(
                 [{ "lhs": res[j], "rhs": arrs[i] }]
@@ -497,7 +488,7 @@ function join_all_sandhi(arrs) {
         res = resn
     }
     // Send the string as an array
-    for (var i = 0; i < res.length; i++) {
+    for (let i = 0; i < res.length; i++) {
         result_string.push(res[i]["st"])
     }
     return result_string

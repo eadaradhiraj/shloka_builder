@@ -9,23 +9,23 @@ function shiftch2aft(arr, si) {
 }
 
 function swap(json) {
-  var ret = {};
-  for (var key in json) {
+  let ret = {};
+  for (let key in json) {
     ret[json[key]] = key;
   }
   return ret;
 }
 
 function allreplace(retStr, obj) {
-  for (var x in obj) {
+  for (let x in obj) {
     retStr = retStr.replace(new RegExp(x, 'g'), obj[x]);
   }
   return retStr
 }
 
 function inverse(obj) {
-  var retobj = {};
-  for (var key in obj) {
+  let retobj = {};
+  for (let key in obj) {
     retobj[obj[key]] = key;
   }
   return retobj;
@@ -33,17 +33,17 @@ function inverse(obj) {
 
 
 function syllabalize(st) {
-  var mahapranas = { "kh": "K", "gh": "Q", "ch": "C", "jh": "Z", "Th": "V", "Dh": "X", "th": "Y", "dh": "F", "pha": "P", "bh": "B" }
+  let mahapranas = { "kh": "K", "gh": "Q", "ch": "C", "jh": "Z", "Th": "V", "Dh": "X", "th": "Y", "dh": "F", "pha": "P", "bh": "B" }
   //arr will hold the array of syllables and the first is initialised
   st = allreplace(st, mahapranas)
-  var arr = [""]
+  let arr = [""]
   // List of vowels in sanskrit
-  si = 0
+  let si = 0
   //Split_next flag to signal when to split
-  split_next = false
-  for (var i = 0; i < st.length; i++) {
+  let split_next = false
+  for (let i = 0; i < st.length; i++) {
     //c will hold each character in the string
-    c = st[i]
+    let c = st[i]
     //character will be appended to the current item in array
     // it should not be space or the next character should be a vowel
     if ((c != ' ') || (vowels.includes(st[i + 1]))) {
@@ -76,9 +76,9 @@ function syllabalize(st) {
     }
   }
   // Remove empty items in the array and trim them
-  res_arr = []
-  for (var i = 0; i < arr.length; i++) {
-    arri = arr[i]
+  let res_arr = []
+  for (let i = 0; i < arr.length; i++) {
+    let arri = arr[i]
     if (arri != "") {
       res_arr.push(allreplace(arri.trim(), inverse(mahapranas)))
     }
