@@ -128,9 +128,9 @@ $(document).ready(function () {
     change_color()
 }).keydown(function(e) {
     let pressed_key = e.keyCode;
-    if (pressed_key == 37) {
+    if (pressed_key == 38) {
         moveLeft($(".selected"))
-    } else if (pressed_key == 39) {
+    } else if (pressed_key == 40) {
         moveRight($(".selected"))
     }
 });
