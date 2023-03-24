@@ -93,6 +93,26 @@ function del_obj_event() {
         $(this).closest('.list-group-item').remove();
     })
 }
+
+function change_color() {
+    $(".list-group-item").click(function(){
+        $(".list-group-item").css("background-color", "white");
+        $(".list-group-item").removeClass("selected");
+        $(this).css("background-color", "blue");
+        $(this).addClass("selected")
+    });
+}
+
+function moveLeft($item) {
+    $before = $item.prev();
+    $item.insertBefore($before);
+}
+
+function moveRight($item) {
+    $after = $item.next();
+    $item.insertAfter($after);
+}
+
 $(function () {
     $("#sortable1").sortable({
         connectWith: ".connectedSortable"
@@ -105,7 +125,15 @@ $("#check").click(function () {
 
 $(document).ready(function () {
     del_obj_event()
-})
+    change_color()
+}).keydown(function(e) {
+    let pressed_key = e.keyCode;
+    if (pressed_key == 37) {
+        moveLeft($(".selected"))
+    } else if (pressed_key == 39) {
+        moveRight($(".selected"))
+    }
+});
 
 
 $("#add_word").click(function () {
@@ -118,9 +146,9 @@ $("#add_word").click(function () {
               <button class="btn del-item btn-outline-secondary" type="button">DEL</button>
             </div>
           </div>
-      </li>`)
-
-    del_obj_event()
+      </li>`);
+    del_obj_event();
+    change_color();
 })
 
 function vowel_type(syll) {
