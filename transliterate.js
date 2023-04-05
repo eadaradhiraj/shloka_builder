@@ -36,7 +36,7 @@ const consonants_dict = {
 const mahapranas_dict = {
     "ai": "E",
     "au": "O",
-    "L": "RR",
+    "RR": "L",
     "kh": "K",
     "gh": "Q",
     "ch": "C",
@@ -117,10 +117,8 @@ function dev2kh(orig) {
             }
         }
         // if consonant is followed by a consonant or end of string
-        else if (
-            (consonant_arr.includes(ch) && consonant_arr.includes(nch)) || i == st.length - 1
-        ) {
-            console.log(ch, consonants_dict[ch]+'्')
+        else if
+            (consonant_arr.includes(ch) && (consonant_arr.includes(nch) || i == st.length - 1 || nch === ' ') ) {
             transstr += consonants_dict[ch]+'्'
         }
         // if consonant followed by a vowel
