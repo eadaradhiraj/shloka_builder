@@ -35,6 +35,7 @@ const consonants_dict = {
 }
 const mahapranas_dict = {
     "ai": "E",
+    "au": "O",
     "L": "RR",
     "kh": "K",
     "gh": "Q",
