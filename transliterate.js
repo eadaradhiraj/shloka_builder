@@ -82,6 +82,7 @@ const special_vowels_dict = {
     'M': 'ं',
     'H': 'ः'
 }
+const space_period = [' ', '.']
 
 var consonant_arr = Object.keys(consonants_dict),
     vowels_markers_arr = Object.keys(vowels_markers_dict),
@@ -102,9 +103,9 @@ function dev2kh(orig) {
         let ch = st.charAt(i),
             nch = st.charAt(i+1),
             pch = st.charAt(i-1)
-        // if current letter is a vowel but previous is also a vowel
+        // if current letter is a vowel but previous is also a vowel or a psace
         if (actual_vowels_arr.includes(ch) && (
-            actual_vowels_arr.includes(pch) || special_vowels_arr.includes(pch) || special_vowels_arr.includes(' ') || special_vowels_arr.includes('।')
+            actual_vowels_arr.includes(pch) || special_vowels_arr.includes(pch) || space_period.includes(pch)
         )) {
             transstr += actual_vowels_dict[ch]
         } 
@@ -118,13 +119,15 @@ function dev2kh(orig) {
         }
         // if consonant is followed by a consonant or end of string
         else if
-            (consonant_arr.includes(ch) && (consonant_arr.includes(nch) || i == st.length - 1 || nch === ' ') ) {
+            (consonant_arr.includes(ch) && (consonant_arr.includes(nch) || i == st.length - 1 || space_period.includes(nch)) ) {
             transstr += consonants_dict[ch]+'्'
         }
         // if consonant followed by a vowel
-        else if (vowels_markers_arr.includes(nch)) {
+        else if (consonant_arr.includes(ch) && vowels_markers_arr.includes(nch)) {
             transstr += consonants_dict[ch] + vowels_markers_dict[nch]
             i = i + 1;
+        } else if (ch == "'") {
+            transstr += "ऽ"
         } else if (ch == '.') {
             transstr += "।"
         } else {

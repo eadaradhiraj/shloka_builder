@@ -433,6 +433,8 @@ function sandhi_join(arrs) {
         } else if (lhst.slice(-1) == "m") {
             if (["a", "A", "e", "o", "i", "I", "u", "U", "R"].includes(rhst.slice(0, 1))) {
                 result = pushjoin(result, rhs["prop"], lhst + rhst)
+            } else if (rhst.slice(0, 1) == ".") {
+                result = pushjoin(result, rhs["prop"], lhst + rhst)
             } else {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "M " + rhst)
             }
