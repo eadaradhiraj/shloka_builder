@@ -103,7 +103,9 @@ function dev2kh(orig) {
             nch = st.charAt(i+1),
             pch = st.charAt(i-1)
         // if current letter is a vowel but previous is also a vowel
-        if (actual_vowels_arr.includes(ch) && (actual_vowels_arr.includes(pch) || special_vowels_arr.includes(pch))) {
+        if (actual_vowels_arr.includes(ch) && (
+            actual_vowels_arr.includes(pch) || special_vowels_arr.includes(pch) || special_vowels_arr.includes(' ') || special_vowels_arr.includes('।')
+        )) {
             transstr += actual_vowels_dict[ch]
         } 
         // if current letter is a visarga or anunAsika
@@ -125,6 +127,8 @@ function dev2kh(orig) {
         else if (vowels_markers_arr.includes(nch)) {
             transstr += consonants_dict[ch] + vowels_markers_dict[nch]
             i = i + 1;
+        } else if (ch == '.') {
+            transstr += "।"
         } else {
             transstr += ch
         }
