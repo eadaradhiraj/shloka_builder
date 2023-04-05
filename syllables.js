@@ -17,12 +17,6 @@ function swap(json) {
   return ret;
 }
 
-function allreplace(retStr, obj) {
-  for (let x in obj) {
-    retStr = retStr.replace(new RegExp(x, 'g'), obj[x]);
-  }
-  return retStr
-}
 
 function inverse(obj) {
   let retobj = {};

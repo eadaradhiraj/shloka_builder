@@ -63,7 +63,7 @@ function create_textare(it, txt) {
     let sylls = syllabalize(txt)
     create_table(sylls)
     $("#results").append(
-        `<input id="result${it}" class="form-control result" value="${txt}" type="text" readonly>`
+        `<input id="result${it}" class="form-control result" value="${dev2kh(txt)}" type="text" readonly>`
     )
 }
 function loop_objs() {
