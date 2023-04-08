@@ -1,4 +1,4 @@
-const consonants_dict = {
+const consonants_dict_dev = {
     "k": "क",
     "K": "ख",
     "g": "ग",
@@ -33,7 +33,7 @@ const consonants_dict = {
     "s": "स",
     "h": "ह"
 }
-const mahapranas_dict = {
+const mahapranas_dict_dev = {
     "ai": "E",
     "au": "O",
     "RR": "L",
@@ -48,7 +48,7 @@ const mahapranas_dict = {
     "pha": "P",
     "bh": "B"
 }
-const vowels_markers_dict = {
+const vowels_markers_dict_dev = {
     'a': '',
     'A': 'ा',
     'i': 'ि',
@@ -63,7 +63,7 @@ const vowels_markers_dict = {
     'O': 'ौ',
 }
 
-const actual_vowels_dict = {
+const actual_vowels_dict_dev = {
     'a': 'अ',
     'A': 'आ',
     'i': 'इ',
@@ -78,25 +78,25 @@ const actual_vowels_dict = {
     'O': 'औ',
 }
 
-const special_vowels_dict = {
+const special_vowels_dict_dev = {
     'M': 'ं',
     'H': 'ः'
 }
-const space_period = [' ', '.']
+const space_period_dev = [' ', '.']
 
-var consonant_arr = Object.keys(consonants_dict),
-    vowels_markers_arr = Object.keys(vowels_markers_dict),
-    special_vowels_arr = Object.keys(special_vowels_dict)
-    actual_vowels_arr = Object.keys(actual_vowels_dict)
+let consonant_dev_arr = Object.keys(consonants_dict_dev),
+    vowels_markers_dev_arr = Object.keys(vowels_markers_dict_dev),
+    special_vowels_dev_arr = Object.keys(special_vowels_dict_dev)
+    actual_vowels_dev_arr = Object.keys(actual_vowels_dict_dev)
 
-function dev2kh(orig) {
+function kh2dev(orig) {
     let transstr = "",
-        st = allreplace(orig, mahapranas_dict),
+        st = allreplace(orig, mahapranas_dict_dev),
         fch = st.charAt('0'),
         st_idx = 0
     // if starting character is a vowel
-    if (actual_vowels_arr.includes(fch)) {
-        transstr = actual_vowels_dict[fch]
+    if (actual_vowels_dev_arr.includes(fch)) {
+        transstr = actual_vowels_dict_dev[fch]
         st_idx = 1
     }
     for (var i = st_idx; i < st.length; i++) {
@@ -104,27 +104,27 @@ function dev2kh(orig) {
             nch = st.charAt(i+1),
             pch = st.charAt(i-1)
         // if current letter is a vowel but previous is also a vowel or a psace
-        if (actual_vowels_arr.includes(ch) && (
-            actual_vowels_arr.includes(pch) || special_vowels_arr.includes(pch) || space_period.includes(pch)
+        if (actual_vowels_dev_arr.includes(ch) && (
+            actual_vowels_dev_arr.includes(pch) || special_vowels_dev_arr.includes(pch) || space_period_dev.includes(pch)
         )) {
-            transstr += actual_vowels_dict[ch]
+            transstr += actual_vowels_dict_dev[ch]
         } 
         // if current letter is a visarga or anunAsika
-        else if (special_vowels_arr.includes(ch)) {
-            transstr += special_vowels_dict[ch]
-            if (actual_vowels_arr.includes(nch)) {
-                transstr += actual_vowels_dict[nch]
+        else if (special_vowels_dev_arr.includes(ch)) {
+            transstr += special_vowels_dict_dev[ch]
+            if (actual_vowels_dev_arr.includes(nch)) {
+                transstr += actual_vowels_dict_dev[nch]
                 i = i + 1
             }
         }
         // if consonant is followed by a consonant or end of string
         else if
-            (consonant_arr.includes(ch) && (consonant_arr.includes(nch) || i == st.length - 1 || space_period.includes(nch)) ) {
-            transstr += consonants_dict[ch]+'्'
+            (consonant_dev_arr.includes(ch) && (consonant_dev_arr.includes(nch) || i == st.length - 1 || space_period_dev.includes(nch)) ) {
+            transstr += consonants_dict_dev[ch]+'्'
         }
         // if consonant followed by a vowel
-        else if (consonant_arr.includes(ch) && vowels_markers_arr.includes(nch)) {
-            transstr += consonants_dict[ch] + vowels_markers_dict[nch]
+        else if (consonant_dev_arr.includes(ch) && vowels_markers_dev_arr.includes(nch)) {
+            transstr += consonants_dict_dev[ch] + vowels_markers_dict_dev[nch]
             i = i + 1;
         } else if (ch == "'") {
             transstr += "ऽ"

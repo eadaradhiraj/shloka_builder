@@ -1,3 +1,4 @@
+const non_rom_reg = /[^\u0000-\u024F\u1E00-\u1EFF\u2C60-\u2C7F\uA720-\uA7FF]/g;
 
 function laghu_or_dirgha (sylls, pos, lorg) {
     if (sylls.length < pos) {
@@ -63,15 +64,20 @@ function create_textare(it, txt) {
     let sylls = syllabalize(txt)
     create_table(sylls)
     $("#results").append(
-        `<input id="result${it}" class="form-control result" value="${dev2kh(txt)}" type="text" readonly>`
+        `<input id="result${it}" class="form-control result" value="${kh2dev(txt)}" type="text" readonly>`
     )
 }
 function loop_objs() {
     let arrs = []
     $('.list-group-item').each(function (_, li) {
+        // if word in devanagari then convert to kh
+        var word_item = $(li).find(".word").val().replace(/\s\s+/g, ' ')
+        if (word_item.replace( non_rom_reg, '#').indexOf('#') > -1) {
+            word_item = dev2kh(word_item)
+        }
         arrs.push(
             {
-                "st": $(li).find(".word").val(),
+                "st": word_item,
                 "prop": $(li).find(".prop").val()
             }
         )
