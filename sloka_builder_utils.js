@@ -160,6 +160,9 @@ function addWord(button) {
   deleteButton.className = 'btn btn-outline-secondary del-item';
   deleteButton.type = 'button';
   deleteButton.textContent = 'delete';
+  moveUpButton.onclick = function () {
+    del_word(this);
+  };
   nestedDiv.appendChild(deleteButton);
 
   // Append the nested div to the main div
@@ -181,22 +184,22 @@ function addWord(button) {
   var sortable1 = document.getElementById('sortable1');
   sortable1.appendChild(listItem);
 
-  del_obj_event();
   change_color();
 }
 
-function del_obj_event() {
-  document.querySelector('.del-item').onclick = function (el) {
-    el.closest('.list-group-item').remove();
-  }
+function del_word(el) {
+
+  el.closest('.list-group-item').remove();
 }
 
 function change_color() {
   document.querySelector('.list-group-item').onclick = function (el) {
     document.querySelector('.list-group-item').style.backgroundColor = "white";
     document.querySelector('.list-group-item').classList.toggle("selected");
-    el.style.backgroundColor = "blue";
-    el.classList.toggle('selected');
+    if(typeof el.style != 'undefined')
+      el.style.backgroundColor = "blue";
+    if(typeof el.classList != 'undefined')
+      el.classList.toggle('selected');
   }
 }
 
