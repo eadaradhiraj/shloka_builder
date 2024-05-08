@@ -160,7 +160,7 @@ function addWord(button) {
   deleteButton.className = 'btn btn-outline-secondary del-item';
   deleteButton.type = 'button';
   deleteButton.textContent = 'delete';
-  moveUpButton.onclick = function () {
+  deleteButton.onclick = function () {
     del_word(this);
   };
   nestedDiv.appendChild(deleteButton);
@@ -188,7 +188,6 @@ function addWord(button) {
 }
 
 function del_word(el) {
-
   el.closest('.list-group-item').remove();
 }
 
