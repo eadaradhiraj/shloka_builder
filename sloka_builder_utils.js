@@ -89,12 +89,14 @@ function loop_objs() {
     alert("You have only one word!! Enter one more at least.")
   }
   let result = join_all_sandhi(arrs)
-  res_sel = document.querySelector(".result")
-  if (res_sel)
-    res_sel.remove()
-  res_tab = document.querySelector(".res_table")
-  if (res_tab)
-    res_tab.remove()
+  // res_sel = document.querySelector(".result")
+  document.querySelectorAll('.result').forEach(e => e.remove());
+  document.querySelectorAll('.res_table').forEach(e => e.remove());
+  // if (res_sel)
+  //   res_sel.remove()
+  // res_tab = document.querySelector(".res_table")
+  // if (res_tab)
+  //   res_tab.remove()
   for (let i = 0; i < result.length; i++) {
     create_textare(i, result[i])
   }
