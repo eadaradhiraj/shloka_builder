@@ -45,7 +45,7 @@ const mahapranas_dict_dev = {
     "Dh": "X",
     "th": "Y",
     "dh": "F",
-    "pha": "P",
+    "ph": "P",
     "bh": "B"
 }
 const vowels_markers_dict_dev = {
