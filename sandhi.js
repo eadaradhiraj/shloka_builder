@@ -17,7 +17,7 @@ function sandhi_join(arrs) {
         let rhst = rhs["st"]
 
         if (( ((lhst.endsWith('saH') || (lhst.endsWith('eSaH')) ) && (lhs["prop"] == "pronoun")))) {
-            if (["e", "o", "i", "I", "u", "U", "c", "d", "D", "h", "k", "l", "m", "b", "n", "p", "h", "t", "T", "v", "A"].includes(rhs["st"][0])) {
+            if (["e", "o", "i", "I", "u", "U", "c", "d", "D", "h", "k", "l", "m", "b", "n", "p", "h", "t", "T", "v", "A", "z"].includes(rhs["st"][0])) {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + " " + rhst)
             } else if (["a"].includes(rhs["st"][0])) {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -2) + "o'" + rhst.slice(1))
