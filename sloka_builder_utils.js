@@ -5,8 +5,8 @@ function laghu_or_dirgha(sylls, pos, lorg) {
     return ""
   } else if (["l"].includes(lorg)) {
     return vowel_type(sylls[pos - 1]) == "l" ? "text-success" : "text-danger"
-  } else if (["d"].includes(lorg)) {
-    return vowel_type(sylls[pos - 1]) == "d" ? "text-success" : "text-danger"
+  } else if (["g"].includes(lorg)) {
+    return vowel_type(sylls[pos - 1]) == "g" ? "text-success" : "text-danger"
   } else {
     return ""
   }
@@ -16,40 +16,46 @@ function create_table(sylls) {
   let metre_dict = {
     "anushtup": {
       5: laghu_or_dirgha(sylls, 5, "l"),
-      6: laghu_or_dirgha(sylls, 6, "d"),
+      6: laghu_or_dirgha(sylls, 6, "g"),
+      7: laghu_or_dirgha(sylls, 7, "g"),
       13: laghu_or_dirgha(sylls, 13, "l"),
-      14: laghu_or_dirgha(sylls, 14, "d"),
+      14: laghu_or_dirgha(sylls, 14, "g"),
       15: laghu_or_dirgha(sylls, 15, "l"),
     },
     "indravajra": {
       //pada 1 or 1st foot
-      1: laghu_or_dirgha(sylls, 1, "d"),
-      2: laghu_or_dirgha(sylls, 2, "d"),
+      1: laghu_or_dirgha(sylls, 1, "g"),
+      2: laghu_or_dirgha(sylls, 2, "g"),
       3: laghu_or_dirgha(sylls, 3, "l"),
-      4: laghu_or_dirgha(sylls, 4, "d"),
-      5: laghu_or_dirgha(sylls, 5, "d"),
+      4: laghu_or_dirgha(sylls, 4, "g"),
+      5: laghu_or_dirgha(sylls, 5, "g"),
       6: laghu_or_dirgha(sylls, 6, "l"),
       7: laghu_or_dirgha(sylls, 7, "l"),
-      8: laghu_or_dirgha(sylls, 8, "d"),
+      8: laghu_or_dirgha(sylls, 8, "g"),
       9: laghu_or_dirgha(sylls, 9, "l"),
-      10: laghu_or_dirgha(sylls, 10, "d"),
-      11: laghu_or_dirgha(sylls, 11, "d"),
+      10: laghu_or_dirgha(sylls, 10, "g"),
+      11: laghu_or_dirgha(sylls, 11, "g"),
       //pada 2 or 2nd foot
-      12: laghu_or_dirgha(sylls, 12, "d"),
-      13: laghu_or_dirgha(sylls, 13, "d"),
+      12: laghu_or_dirgha(sylls, 12, "g"),
+      13: laghu_or_dirgha(sylls, 13, "g"),
       14: laghu_or_dirgha(sylls, 14, "l"),
-      15: laghu_or_dirgha(sylls, 15, "d"),
-      16: laghu_or_dirgha(sylls, 16, "d"),
+      15: laghu_or_dirgha(sylls, 15, "g"),
+      16: laghu_or_dirgha(sylls, 16, "g"),
       17: laghu_or_dirgha(sylls, 17, "l"),
       18: laghu_or_dirgha(sylls, 18, "l"),
-      19: laghu_or_dirgha(sylls, 19, "d"),
+      19: laghu_or_dirgha(sylls, 19, "g"),
       20: laghu_or_dirgha(sylls, 20, "l"),
-      21: laghu_or_dirgha(sylls, 21, "d"),
-      22: laghu_or_dirgha(sylls, 22, "d"),
+      21: laghu_or_dirgha(sylls, 21, "g"),
+      22: laghu_or_dirgha(sylls, 22, "g"),
     }
   }
 
   let content = "<table class='table res_table'><tr>"
+  for (let i = 0; i < sylls.length; i++) {
+    metr_val = document.getElementById('metres').value;
+    content += `<td class=${metre_dict[metr_val][i + 1]}>` + vowel_type(sylls[i]) + '</td>';
+  }
+  content += '</tr><tr>'
   for (let i = 0; i < sylls.length; i++) {
     metr_val = document.getElementById('metres').value;
     content += `<td class=${metre_dict[metr_val][i + 1]}>` + sylls[i] + '</td>';
@@ -218,5 +224,5 @@ function change_color() {
 // });
 
 function vowel_type(syll) {
-  return (short_vowels.includes(syll.slice(-1))) && (!vowels.includes(syll.slice(-2, -1))) ? "l" : "d"
+  return (short_vowels.includes(syll.slice(-1))) && (!vowels.includes(syll.slice(-2, -1))) ? "l" : "g"
 }
