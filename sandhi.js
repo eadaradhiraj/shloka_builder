@@ -26,6 +26,21 @@ function sandhi_join(arrs) {
             } else {
                 result = pushjoin(result, rhs["prop"], lhst + " " + rhst)
             }
+        } else if ( lhst.endsWith("r") ) {
+            if (rhst.slice(0, 1) == "r") {
+                const elongd = {"a": "A", "A": "A", "i": "I", "I": "I", "u": "U", "U": "U"}
+                result = pushjoin(result, rhs["prop"], lhst.slice(0, -2) + elongd[lhst.slice(-2,-1)] + rhst)
+            } else if ( ["n", "g", "j", "a", "A", "i", "I", "u", "U", "d", "D", "m", "y", "b", "l", "v", "h"].includes( rhst.slice(0, 1) ) ) {
+                result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "r" + rhst)
+            } else if ( ["c"].includes( rhst.slice(0, 1) ) ) {
+                result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "z" + rhst)
+            } else if ( ["T"].includes( rhst.slice(0, 1) ) ) {
+                result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "S" + rhst)
+            } else if ( ["t"].includes( rhst.slice(0, 1) ) ) {
+                result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "s" + rhst)
+            } else {
+                result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "H " + rhst)
+            }
         } else if (lhst.slice(-2) == "An") {
             if (["a", "A", "e", "o", "i", "I", "u", "U", "R"].includes(rhst.slice(0, 1))) {
                 result = pushjoin(result, rhs["prop"], lhst + rhst)
@@ -47,11 +62,11 @@ function sandhi_join(arrs) {
         } else if (["ai", "au"].includes(lhst.slice(-2))) {
 
             if ((["a", "A", "i", "I", "u", "U", "e", "o", "R"].includes(rhst.slice(0, 1)))) {
-                const aiudict = { "ai": "y", "au": "v" }
+                const aiudict = { "ai": " ", "au": "v" }
     
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -2) + "A" + aiudict[lhst.slice(-2)] + rhst)
-
-                result = pushjoin(result, rhs["prop"], lhst.slice(0, -2) + "A " + rhst)
+                // disabling this as not used in practise
+                // result = pushjoin(result, rhs["prop"], lhst.slice(0, -2) + "A " + rhst)
             } else {
                 result = pushjoin(result, rhs["prop"], lhst + " " + rhst)
             }
@@ -99,13 +114,15 @@ function sandhi_join(arrs) {
                 result = pushjoin(result, rhs["prop"], lhst + " " + rhst)
             }
             else if (["au", "ai"].includes(rhst.slice(0, 2))) {
-                const auieodict = { "o": "v", "e": "y" }
-                result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "a " + rhst)
+                const auieodict = { "o": "v", "e": " " }
+                // disabling this as not used in practise
+                // result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "a " + rhst)
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "a" + auieodict[lhst.slice(-1)] + rhst)
             } else if (["i", "I", "u", "U", "e", "o", "R"].includes(rhst.slice(0, 1))) {
-                const aiudict = { "e": "y", "o": "v" }
+                const aiudict = { "e": " ", "o": "v" }
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "a" + aiudict[lhst.slice(-1)] + rhst)
-                result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "a " + rhst)
+                // disabling this as not used in practise
+                // result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "a " + rhst)
             } else if (rhst.slice(0, 1) == "a") {
                 result = pushjoin(result, rhs["prop"], lhst + "'" + rhst.slice(1))
             } else if (rhst.slice(0, 1) == "A") {
@@ -116,21 +133,7 @@ function sandhi_join(arrs) {
                 result = pushjoin(result, rhs["prop"], lhst + " " + rhst)
             }
         } else if (lhst.slice(-2) == "aH") {
-            if (lhs["prop"] == "r-ending") {
-                if (rhst.slice(0, 1) == "r") {
-                    result = pushjoin(result, rhs["prop"], lhst.slice(0, -2) + "A " + rhst)
-                } else if ( ["n", "g", "j", "a", "A", "i", "I", "u", "U", "d", "D", "m", "y", "b", "l", "v", "h"].includes( rhst.slice(0, 1) ) ) {
-                    result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "r" + rhst)
-                } else if ( ["c"].includes( rhst.slice(0, 1) ) ) {
-                    result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "z" + rhst)
-                } else if ( ["T"].includes( rhst.slice(0, 1) ) ) {
-                    result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "S" + rhst)
-                } else if ( ["t"].includes( rhst.slice(0, 1) ) ) {
-                    result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "s" + rhst)
-                } else {
-                    result = pushjoin(result, rhs["prop"], lhst + "" + rhst)
-                }
-            } else if (rhst.slice(0, 1) == "a") {
+            if (rhst.slice(0, 1) == "a") {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -2) + "o'" + rhst.slice(1))
             } else if (["e", "o", "i", "u", "U", "A"].includes(rhst.slice(0, 1))) {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + " " + rhst)
