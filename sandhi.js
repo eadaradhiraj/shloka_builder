@@ -65,8 +65,8 @@ function sandhi_join(arrs) {
                 const aiudict = { "ai": " ", "au": "v" }
     
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -2) + "A" + aiudict[lhst.slice(-2)] + rhst)
-                // disabling this as not used in practise
-                // result = pushjoin(result, rhs["prop"], lhst.slice(0, -2) + "A " + rhst)
+                // not used in practise
+                result = pushjoin(result, rhs["prop"], lhst.slice(0, -2) + "A " + rhst)
             } else {
                 result = pushjoin(result, rhs["prop"], lhst + " " + rhst)
             }
@@ -115,14 +115,14 @@ function sandhi_join(arrs) {
             }
             else if (["au", "ai"].includes(rhst.slice(0, 2))) {
                 const auieodict = { "o": "v", "e": " " }
-                // disabling this as not used in practise
-                // result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "a " + rhst)
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "a" + auieodict[lhst.slice(-1)] + rhst)
+                // not used in practise
+                result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "a " + rhst)
             } else if (["i", "I", "u", "U", "e", "o", "R"].includes(rhst.slice(0, 1))) {
                 const aiudict = { "e": " ", "o": "v" }
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "a" + aiudict[lhst.slice(-1)] + rhst)
-                // disabling this as not used in practise
-                // result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "a " + rhst)
+                // not used in practise
+                result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "a " + rhst)
             } else if (rhst.slice(0, 1) == "a") {
                 result = pushjoin(result, rhs["prop"], lhst + "'" + rhst.slice(1))
             } else if (rhst.slice(0, 1) == "A") {
