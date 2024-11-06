@@ -62,11 +62,10 @@ function sandhi_join(arrs) {
         } else if (["ai", "au"].includes(lhst.slice(-2))) {
 
             if ((["a", "A", "i", "I", "u", "U", "e", "o", "R"].includes(rhst.slice(0, 1)))) {
-                const aiudict = { "ai": " ", "au": "v" }
-    
-                result = pushjoin(result, rhs["prop"], lhst.slice(0, -2) + "A" + aiudict[lhst.slice(-2)] + rhst)
-                // not used in practise
+                const aiudict = { "ai": "y", "au": "v" }
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -2) + "A " + rhst)
+                // not used in practise
+                result = pushjoin(result, rhs["prop"], lhst.slice(0, -2) + "A" + aiudict[lhst.slice(-2)] + rhst)
             } else {
                 result = pushjoin(result, rhs["prop"], lhst + " " + rhst)
             }
@@ -115,14 +114,15 @@ function sandhi_join(arrs) {
             }
             else if (["au", "ai"].includes(rhst.slice(0, 2))) {
                 const auieodict = { "o": "v", "e": "y" }
-                result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "a" + auieodict[lhst.slice(-1)] + rhst)
-                // not used in practise
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "a " + rhst)
+                // not used in practise
+                result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "a" + auieodict[lhst.slice(-1)] + rhst)
             } else if (["i", "I", "u", "U", "e", "o", "R"].includes(rhst.slice(0, 1))) {
                 const aiudict = { "e": "y", "o": "v" }
-                result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "a" + aiudict[lhst.slice(-1)] + rhst)
-                // not used in practise
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "a " + rhst)
+                // not used in practise
+                result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "a" + aiudict[lhst.slice(-1)] + rhst)
+
             } else if (rhst.slice(0, 1) == "a") {
                 result = pushjoin(result, rhs["prop"], lhst + "'" + rhst.slice(1))
             } else if (rhst.slice(0, 1) == "A") {
