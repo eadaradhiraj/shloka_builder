@@ -114,12 +114,12 @@ function sandhi_join(arrs) {
                 result = pushjoin(result, rhs["prop"], lhst + " " + rhst)
             }
             else if (["au", "ai"].includes(rhst.slice(0, 2))) {
-                const auieodict = { "o": "v", "e": " " }
+                const auieodict = { "o": "v", "e": "y" }
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "a" + auieodict[lhst.slice(-1)] + rhst)
                 // not used in practise
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "a " + rhst)
             } else if (["i", "I", "u", "U", "e", "o", "R"].includes(rhst.slice(0, 1))) {
-                const aiudict = { "e": " ", "o": "v" }
+                const aiudict = { "e": "y", "o": "v" }
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "a" + aiudict[lhst.slice(-1)] + rhst)
                 // not used in practise
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + "a " + rhst)
