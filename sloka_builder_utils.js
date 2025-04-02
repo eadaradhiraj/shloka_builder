@@ -18,6 +18,7 @@ function create_table(sylls) {
       //pada 1
       5: laghu_or_dirgha(sylls, 5, "l"),
       6: laghu_or_dirgha(sylls, 6, "g"),
+      7: laghu_or_dirgha(sylls, 7, "g"),
       //pada 2
       13: laghu_or_dirgha(sylls, 13, "l"),
       14: laghu_or_dirgha(sylls, 14, "g"),
