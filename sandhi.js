@@ -96,8 +96,7 @@ function sandhi_join(arrs) {
             result = pushjoin(result, rhs["prop"], jst)
 
         } else if (["u", "U"].includes(lhst.slice(-1))) {
-
-            const vowelarr = ["a", "A", "e", "o", "R", "u", "U"]
+            const vowelarr = ["a", "A", "e", "o", "R", "i", "I"]
 
             if ((vowelarr.includes(rhst.slice(0, 1))) && (lhs["prop"] != "dual")) {
                 jst = lhst.slice(0, -1) + "v" + rhs["st"]
