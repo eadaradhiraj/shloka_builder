@@ -36,45 +36,7 @@ function create_table(sylls) {
       8: laghu_or_dirgha(sylls, 8, "g"),
       9: laghu_or_dirgha(sylls, 9, "l"),
       10: laghu_or_dirgha(sylls, 10, "g"),
-      11: laghu_or_dirgha(sylls, 11, "g"),
-      // pada 2
-      12: laghu_or_dirgha(sylls, 12, "l"),
-      13: laghu_or_dirgha(sylls, 13, "g"),
-      14: laghu_or_dirgha(sylls, 14, "l"),
-      15: laghu_or_dirgha(sylls, 15, "g"),
-      16: laghu_or_dirgha(sylls, 16, "g"),
-      17: laghu_or_dirgha(sylls, 17, "l"),
-      18: laghu_or_dirgha(sylls, 18, "l"),
-      19: laghu_or_dirgha(sylls, 19, "g"),
-      20: laghu_or_dirgha(sylls, 20, "l"),
-      21: laghu_or_dirgha(sylls, 21, "g"),
-      22: laghu_or_dirgha(sylls, 22, "g"),
-    },
-    "upajAti": {
-      //pada 1
-      1: laghu_or_dirgha(sylls, 1, "l"),
-      2: laghu_or_dirgha(sylls, 2, "g"),
-      3: laghu_or_dirgha(sylls, 3, "l"),
-      4: laghu_or_dirgha(sylls, 4, "g"),
-      5: laghu_or_dirgha(sylls, 5, "g"),
-      6: laghu_or_dirgha(sylls, 6, "l"),
-      7: laghu_or_dirgha(sylls, 7, "l"),
-      8: laghu_or_dirgha(sylls, 8, "g"),
-      9: laghu_or_dirgha(sylls, 9, "l"),
-      10: laghu_or_dirgha(sylls, 10, "g"),
-      11: laghu_or_dirgha(sylls, 11, "g"),
-      //pada 2
-      12: laghu_or_dirgha(sylls, 12, "g"),
-      13: laghu_or_dirgha(sylls, 13, "g"),
-      14: laghu_or_dirgha(sylls, 14, "l"),
-      15: laghu_or_dirgha(sylls, 15, "g"),
-      16: laghu_or_dirgha(sylls, 16, "g"),
-      17: laghu_or_dirgha(sylls, 17, "l"),
-      18: laghu_or_dirgha(sylls, 18, "l"),
-      19: laghu_or_dirgha(sylls, 19, "g"),
-      20: laghu_or_dirgha(sylls, 20, "l"),
-      21: laghu_or_dirgha(sylls, 21, "g"),
-      22: laghu_or_dirgha(sylls, 22, "g"),
+      11: laghu_or_dirgha(sylls, 11, "g")
     },
     "shalini": {
       // pada 1
@@ -89,18 +51,6 @@ function create_table(sylls) {
       9: laghu_or_dirgha(sylls, 9, "l"),
       10: laghu_or_dirgha(sylls, 10, "g"),
       11: laghu_or_dirgha(sylls, 11, "g"),
-      // pada 2
-      12: laghu_or_dirgha(sylls, 12, "g"),
-      13: laghu_or_dirgha(sylls, 13, "g"),
-      14: laghu_or_dirgha(sylls, 14, "g"),
-      15: laghu_or_dirgha(sylls, 15, "g"),
-      16: laghu_or_dirgha(sylls, 16, "g"),
-      17: laghu_or_dirgha(sylls, 17, "l"),
-      18: laghu_or_dirgha(sylls, 18, "g"),
-      19: laghu_or_dirgha(sylls, 19, "g"),
-      20: laghu_or_dirgha(sylls, 20, "l"),
-      21: laghu_or_dirgha(sylls, 21, "g"),
-      22: laghu_or_dirgha(sylls, 22, "g"),
     },
     "bhujangaprayAta": {
       //lgg/lgg/lgg/lgg
@@ -117,19 +67,6 @@ function create_table(sylls) {
       10: laghu_or_dirgha(sylls, 10, "l"),
       11: laghu_or_dirgha(sylls, 11, "g"),
       12: laghu_or_dirgha(sylls, 12, "g"),
-      // pada 2
-      13: laghu_or_dirgha(sylls, 13, "l"),
-      14: laghu_or_dirgha(sylls, 14, "g"),
-      15: laghu_or_dirgha(sylls, 15, "g"),
-      16: laghu_or_dirgha(sylls, 16, "l"),
-      17: laghu_or_dirgha(sylls, 17, "g"),
-      18: laghu_or_dirgha(sylls, 18, "g"),
-      19: laghu_or_dirgha(sylls, 19, "l"),
-      20: laghu_or_dirgha(sylls, 20, "g"),
-      21: laghu_or_dirgha(sylls, 21, "g"),
-      22: laghu_or_dirgha(sylls, 22, "l"),
-      23: laghu_or_dirgha(sylls, 23, "g"),
-      24: laghu_or_dirgha(sylls, 24, "g"),
     },
     "druta-vilambita": {
       //lll-gll-gll-glg
@@ -146,19 +83,6 @@ function create_table(sylls) {
       10: laghu_or_dirgha(sylls, 10, "g"),
       11: laghu_or_dirgha(sylls, 11, "l"),
       12: laghu_or_dirgha(sylls, 12, "g"),
-      // pada 2
-      13: laghu_or_dirgha(sylls, 13, "l"),
-      14: laghu_or_dirgha(sylls, 14, "l"),
-      15: laghu_or_dirgha(sylls, 15, "l"),
-      16: laghu_or_dirgha(sylls, 16, "g"),
-      17: laghu_or_dirgha(sylls, 17, "l"),
-      18: laghu_or_dirgha(sylls, 18, "l"),
-      19: laghu_or_dirgha(sylls, 19, "g"),
-      20: laghu_or_dirgha(sylls, 20, "l"),
-      21: laghu_or_dirgha(sylls, 21, "l"),
-      22: laghu_or_dirgha(sylls, 22, "g"),
-      23: laghu_or_dirgha(sylls, 23, "l"),
-      24: laghu_or_dirgha(sylls, 24, "g"),
     },
     "chandriNI": {
       //lgg/ggg/glg/glg/g
@@ -176,20 +100,6 @@ function create_table(sylls) {
       11: laghu_or_dirgha(sylls, 11, "l"),
       12: laghu_or_dirgha(sylls, 12, "g"),
       13: laghu_or_dirgha(sylls, 13, "g"),
-      // pada 2
-      14: laghu_or_dirgha(sylls, 14, "l"),
-      15: laghu_or_dirgha(sylls, 15, "g"),
-      16: laghu_or_dirgha(sylls, 16, "g"),
-      17: laghu_or_dirgha(sylls, 17, "g"),
-      18: laghu_or_dirgha(sylls, 18, "g"),
-      19: laghu_or_dirgha(sylls, 19, "g"),
-      20: laghu_or_dirgha(sylls, 20, "g"),
-      21: laghu_or_dirgha(sylls, 21, "l"),
-      22: laghu_or_dirgha(sylls, 22, "g"),
-      23: laghu_or_dirgha(sylls, 23, "g"),
-      24: laghu_or_dirgha(sylls, 24, "l"),
-      25: laghu_or_dirgha(sylls, 25, "g"),
-      26: laghu_or_dirgha(sylls, 26, "g"),
     },
     "mAlinI": {
       //lll/lll/ggg/lgg/lgg
@@ -209,22 +119,6 @@ function create_table(sylls) {
       13: laghu_or_dirgha(sylls, 13, "l"),
       14: laghu_or_dirgha(sylls, 14, "g"),
       15: laghu_or_dirgha(sylls, 15, "g"),
-      // pada 2
-      16: laghu_or_dirgha(sylls, 16, "l"),
-      17: laghu_or_dirgha(sylls, 17, "l"),
-      18: laghu_or_dirgha(sylls, 18, "l"),
-      19: laghu_or_dirgha(sylls, 19, "l"),
-      20: laghu_or_dirgha(sylls, 20, "l"),
-      21: laghu_or_dirgha(sylls, 21, "l"),
-      22: laghu_or_dirgha(sylls, 22, "g"),
-      23: laghu_or_dirgha(sylls, 23, "g"),
-      24: laghu_or_dirgha(sylls, 24, "g"),
-      25: laghu_or_dirgha(sylls, 25, "l"),
-      26: laghu_or_dirgha(sylls, 26, "g"),
-      27: laghu_or_dirgha(sylls, 27, "g"),
-      28: laghu_or_dirgha(sylls, 28, "l"),
-      29: laghu_or_dirgha(sylls, 29, "g"),
-      30: laghu_or_dirgha(sylls, 30, "g"),
     },
     "totakam": {
       //llg/llg/llg/llg
@@ -241,19 +135,6 @@ function create_table(sylls) {
       10: laghu_or_dirgha(sylls, 10, "l"),
       11: laghu_or_dirgha(sylls, 11, "l"),
       12: laghu_or_dirgha(sylls, 12, "g"),
-      // pada 2
-      13: laghu_or_dirgha(sylls, 13, "l"),
-      14: laghu_or_dirgha(sylls, 14, "l"),
-      15: laghu_or_dirgha(sylls, 15, "g"),
-      16: laghu_or_dirgha(sylls, 16, "l"),
-      17: laghu_or_dirgha(sylls, 17, "l"),
-      18: laghu_or_dirgha(sylls, 18, "g"),
-      19: laghu_or_dirgha(sylls, 19, "l"),
-      20: laghu_or_dirgha(sylls, 20, "l"),
-      21: laghu_or_dirgha(sylls, 21, "g"),
-      22: laghu_or_dirgha(sylls, 22, "l"),
-      23: laghu_or_dirgha(sylls, 23, "l"),
-      24: laghu_or_dirgha(sylls, 24, "g"),
     },
     "pancAmaram": {
       //lgl/glg/lgl/glg/lgl/g
@@ -274,23 +155,6 @@ function create_table(sylls) {
       14: laghu_or_dirgha(sylls, 14, "g"),
       15: laghu_or_dirgha(sylls, 15, "l"),
       16: laghu_or_dirgha(sylls, 16, "g"),
-      // pada 2
-      17: laghu_or_dirgha(sylls, 17, "l"),
-      18: laghu_or_dirgha(sylls, 18, "g"),
-      19: laghu_or_dirgha(sylls, 19, "l"),
-      20: laghu_or_dirgha(sylls, 20, "g"),
-      21: laghu_or_dirgha(sylls, 21, "l"),
-      22: laghu_or_dirgha(sylls, 22, "g"),
-      23: laghu_or_dirgha(sylls, 23, "l"),
-      24: laghu_or_dirgha(sylls, 24, "g"),
-      25: laghu_or_dirgha(sylls, 25, "l"),
-      26: laghu_or_dirgha(sylls, 26, "g"),
-      27: laghu_or_dirgha(sylls, 27, "l"),
-      28: laghu_or_dirgha(sylls, 28, "g"),
-      29: laghu_or_dirgha(sylls, 29, "l"),
-      30: laghu_or_dirgha(sylls, 30, "g"),
-      31: laghu_or_dirgha(sylls, 31, "l"),
-      32: laghu_or_dirgha(sylls, 32, "g"),
     },
     "shikhariNI": {
       //lgg/ggg/lll/llg/gll/lg
@@ -312,24 +176,6 @@ function create_table(sylls) {
       15: laghu_or_dirgha(sylls, 15, "l"),
       16: laghu_or_dirgha(sylls, 16, "l"),
       17: laghu_or_dirgha(sylls, 17, "g"),
-      // pada 2
-      18: laghu_or_dirgha(sylls, 18, "l"),
-      19: laghu_or_dirgha(sylls, 19, "g"),
-      20: laghu_or_dirgha(sylls, 20, "g"),
-      21: laghu_or_dirgha(sylls, 21, "g"),
-      22: laghu_or_dirgha(sylls, 22, "g"),
-      23: laghu_or_dirgha(sylls, 23, "g"),
-      24: laghu_or_dirgha(sylls, 24, "l"),
-      25: laghu_or_dirgha(sylls, 25, "l"),
-      26: laghu_or_dirgha(sylls, 26, "l"),
-      27: laghu_or_dirgha(sylls, 27, "l"),
-      28: laghu_or_dirgha(sylls, 28, "l"),
-      29: laghu_or_dirgha(sylls, 29, "g"),
-      30: laghu_or_dirgha(sylls, 30, "g"),
-      31: laghu_or_dirgha(sylls, 31, "l"),
-      32: laghu_or_dirgha(sylls, 32, "l"),
-      33: laghu_or_dirgha(sylls, 33, "l"),
-      34: laghu_or_dirgha(sylls, 34, "g"),
     },
     "mandAkrAntA": {
       //ggg/gll/lll/ggl/ggl/gg
@@ -351,24 +197,6 @@ function create_table(sylls) {
       15: laghu_or_dirgha(sylls, 15, "l"),
       16: laghu_or_dirgha(sylls, 16, "g"),
       17: laghu_or_dirgha(sylls, 17, "g"),
-      // pada 2
-      18: laghu_or_dirgha(sylls, 18, "g"),
-      19: laghu_or_dirgha(sylls, 19, "g"),
-      20: laghu_or_dirgha(sylls, 20, "g"),
-      21: laghu_or_dirgha(sylls, 21, "g"),
-      22: laghu_or_dirgha(sylls, 22, "l"),
-      23: laghu_or_dirgha(sylls, 23, "l"),
-      24: laghu_or_dirgha(sylls, 24, "l"),
-      25: laghu_or_dirgha(sylls, 25, "l"),
-      26: laghu_or_dirgha(sylls, 26, "l"),
-      27: laghu_or_dirgha(sylls, 27, "g"),
-      28: laghu_or_dirgha(sylls, 28, "g"),
-      29: laghu_or_dirgha(sylls, 29, "l"),
-      30: laghu_or_dirgha(sylls, 30, "g"),
-      31: laghu_or_dirgha(sylls, 31, "g"),
-      32: laghu_or_dirgha(sylls, 32, "l"),
-      33: laghu_or_dirgha(sylls, 33, "g"),
-      34: laghu_or_dirgha(sylls, 34, "g"),
     },
     "shArdUla-vikrIditam": {
       // ggg-llg-lgl-llg-ggl-ggl-g
@@ -392,26 +220,6 @@ function create_table(sylls) {
       17: laghu_or_dirgha(sylls, 17, "g"),
       18: laghu_or_dirgha(sylls, 18, "l"),
       19: laghu_or_dirgha(sylls, 19, "g"),
-      // pada 2
-      20: laghu_or_dirgha(sylls, 20, "g"),
-      21: laghu_or_dirgha(sylls, 21, "g"),
-      22: laghu_or_dirgha(sylls, 22, "g"),
-      23: laghu_or_dirgha(sylls, 23, "l"),
-      24: laghu_or_dirgha(sylls, 24, "l"),
-      25: laghu_or_dirgha(sylls, 25, "g"),
-      26: laghu_or_dirgha(sylls, 26, "l"),
-      27: laghu_or_dirgha(sylls, 27, "g"),
-      28: laghu_or_dirgha(sylls, 28, "l"),
-      29: laghu_or_dirgha(sylls, 29, "l"),
-      30: laghu_or_dirgha(sylls, 30, "l"),
-      31: laghu_or_dirgha(sylls, 31, "g"),
-      32: laghu_or_dirgha(sylls, 32, "g"),
-      33: laghu_or_dirgha(sylls, 33, "g"),
-      34: laghu_or_dirgha(sylls, 34, "l"),
-      35: laghu_or_dirgha(sylls, 35, "g"),
-      36: laghu_or_dirgha(sylls, 26, "g"),
-      37: laghu_or_dirgha(sylls, 37, "l"),
-      38: laghu_or_dirgha(sylls, 38, "g"),
     },
     "sragdhaaraa": {
       // ggg glg gll lll lgg lgg lgg
@@ -437,28 +245,6 @@ function create_table(sylls) {
       19: laghu_or_dirgha(sylls, 19, "l"),
       20: laghu_or_dirgha(sylls, 20, "g"),
       21: laghu_or_dirgha(sylls, 21, "g"),
-      // pada 2
-      22: laghu_or_dirgha(sylls, 22, "g"),
-      23: laghu_or_dirgha(sylls, 23, "g"),
-      24: laghu_or_dirgha(sylls, 24, "g"),
-      25: laghu_or_dirgha(sylls, 25, "g"),
-      26: laghu_or_dirgha(sylls, 26, "l"),
-      27: laghu_or_dirgha(sylls, 27, "g"),
-      28: laghu_or_dirgha(sylls, 28, "g"),
-      29: laghu_or_dirgha(sylls, 29, "l"),
-      30: laghu_or_dirgha(sylls, 30, "l"),
-      31: laghu_or_dirgha(sylls, 31, "l"),
-      32: laghu_or_dirgha(sylls, 32, "l"),
-      33: laghu_or_dirgha(sylls, 33, "l"),
-      34: laghu_or_dirgha(sylls, 34, "l"),
-      35: laghu_or_dirgha(sylls, 35, "g"),
-      36: laghu_or_dirgha(sylls, 36, "g"),
-      37: laghu_or_dirgha(sylls, 37, "l"),
-      38: laghu_or_dirgha(sylls, 38, "g"),
-      39: laghu_or_dirgha(sylls, 39, "g"),
-      40: laghu_or_dirgha(sylls, 40, "l"),
-      41: laghu_or_dirgha(sylls, 41, "g"),
-      42: laghu_or_dirgha(sylls, 42, "g"),
     },
     "Vamshastha": {
       // pada 1
@@ -474,19 +260,6 @@ function create_table(sylls) {
       10: laghu_or_dirgha(sylls, 10, "g"),
       11: laghu_or_dirgha(sylls, 11, "l"),
       12: laghu_or_dirgha(sylls, 12, "g"),
-      // pada 2
-      13: laghu_or_dirgha(sylls, 13, "l"),
-      14: laghu_or_dirgha(sylls, 14, "g"),
-      15: laghu_or_dirgha(sylls, 15, "l"),
-      16: laghu_or_dirgha(sylls, 16, "g"),
-      17: laghu_or_dirgha(sylls, 17, "g"),
-      18: laghu_or_dirgha(sylls, 18, "l"),
-      19: laghu_or_dirgha(sylls, 19, "l"),
-      20: laghu_or_dirgha(sylls, 20, "g"),
-      21: laghu_or_dirgha(sylls, 21, "l"),
-      22: laghu_or_dirgha(sylls, 22, "g"),
-      23: laghu_or_dirgha(sylls, 23, "l"),
-      24: laghu_or_dirgha(sylls, 24, "g"),
     },
     "vasantatilaka": {
       //ggl/gll/lgl/lgl/gg
@@ -505,21 +278,6 @@ function create_table(sylls) {
       12: laghu_or_dirgha(sylls, 12, "l"),
       13: laghu_or_dirgha(sylls, 13, "g"),
       14: laghu_or_dirgha(sylls, 14, "g"),
-      // pada 2
-      15: laghu_or_dirgha(sylls, 15, "g"),
-      16: laghu_or_dirgha(sylls, 16, "g"),
-      17: laghu_or_dirgha(sylls, 17, "l"),
-      18: laghu_or_dirgha(sylls, 18, "g"),
-      19: laghu_or_dirgha(sylls, 19, "l"),
-      20: laghu_or_dirgha(sylls, 20, "l"),
-      21: laghu_or_dirgha(sylls, 21, "l"),
-      22: laghu_or_dirgha(sylls, 22, "g"),
-      23: laghu_or_dirgha(sylls, 23, "l"),
-      24: laghu_or_dirgha(sylls, 24, "l"),
-      25: laghu_or_dirgha(sylls, 25, "g"),
-      26: laghu_or_dirgha(sylls, 26, "l"),
-      27: laghu_or_dirgha(sylls, 27, "g"),
-      28: laghu_or_dirgha(sylls, 28, "g"),
     },
     "rathoddhatA": {
       // pada 1
@@ -534,18 +292,6 @@ function create_table(sylls) {
       9: laghu_or_dirgha(sylls, 9, "g"),
       10: laghu_or_dirgha(sylls, 10, "l"),
       11: laghu_or_dirgha(sylls, 11, "g"),
-      // pada 2
-      12: laghu_or_dirgha(sylls, 12, "g"),
-      13: laghu_or_dirgha(sylls, 13, "l"),
-      14: laghu_or_dirgha(sylls, 14, "g"),
-      15: laghu_or_dirgha(sylls, 15, "l"),
-      16: laghu_or_dirgha(sylls, 16, "l"),
-      17: laghu_or_dirgha(sylls, 17, "l"),
-      18: laghu_or_dirgha(sylls, 18, "g"),
-      19: laghu_or_dirgha(sylls, 19, "l"),
-      20: laghu_or_dirgha(sylls, 20, "g"),
-      21: laghu_or_dirgha(sylls, 21, "l"),
-      22: laghu_or_dirgha(sylls, 22, "g"),
     },
     "indravajra": {
       //pada 1 or 1st foot
@@ -560,18 +306,6 @@ function create_table(sylls) {
       9: laghu_or_dirgha(sylls, 9, "l"),
       10: laghu_or_dirgha(sylls, 10, "g"),
       11: laghu_or_dirgha(sylls, 11, "g"),
-      //pada 2 or 2nd foot
-      12: laghu_or_dirgha(sylls, 12, "g"),
-      13: laghu_or_dirgha(sylls, 13, "g"),
-      14: laghu_or_dirgha(sylls, 14, "l"),
-      15: laghu_or_dirgha(sylls, 15, "g"),
-      16: laghu_or_dirgha(sylls, 16, "g"),
-      17: laghu_or_dirgha(sylls, 17, "l"),
-      18: laghu_or_dirgha(sylls, 18, "l"),
-      19: laghu_or_dirgha(sylls, 19, "g"),
-      20: laghu_or_dirgha(sylls, 20, "l"),
-      21: laghu_or_dirgha(sylls, 21, "g"),
-      22: laghu_or_dirgha(sylls, 22, "g"),
     }
   }
 
@@ -616,9 +350,10 @@ function loop_objs() {
       }
     )
   }
-  if (arrs.length == 1) {
-    alert("You have only one word!! Enter one more at least.")
-  }
+  // TODO: comment for now, remove later
+  // if (arrs.length == 1) {
+  //   alert("You have only one word!! Enter one more at least.")
+  // }
   let result = join_all_sandhi(arrs)
   // res_sel = document.querySelector(".result")
   document.querySelectorAll('.result').forEach(e => e.remove());
