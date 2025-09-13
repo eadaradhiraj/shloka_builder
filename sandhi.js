@@ -10,6 +10,7 @@ function pushjoin(result, prop, st) {
 function sandhi_join(arrs) {
     let nasal_sounds = ["n", "m", "J", "G", "N"]
     let result = []
+    // debugger
     for (let i = 0; i < arrs.length; i++) {
         let lhs = arrs[i].lhs
         let rhs = arrs[i].rhs || {'st': ''}
@@ -23,6 +24,14 @@ function sandhi_join(arrs) {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + " " + rhst)
             } else if (["a"].includes(rhs["st"][0])) {
                 result = pushjoin(result, rhs["prop"], lhst.slice(0, -2) + "o'" + rhst.slice(1))
+            } else {
+                result = pushjoin(result, rhs["prop"], lhst + " " + rhst)
+            }
+        } else if ( lhst.endsWith("R") ) {
+            if ( ["a", "A", "i", "I", "u", "U", "o"].includes( rhst.slice(0, 1) ) ) {
+                result = pushjoin(result, rhs["prop"], lhst.slice(0, -1) + 'r' + rhst)
+            } else if ( ["R"].includes( rhst.slice(0, 1) ) ) {
+                result = pushjoin(result, rhs["prop"], lhst + '' + rhst)
             } else {
                 result = pushjoin(result, rhs["prop"], lhst + " " + rhst)
             }
