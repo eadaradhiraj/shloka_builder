@@ -70,6 +70,7 @@
       border-radius: 6px;
       font-size: 0.95rem;
       background: #fafafa;
+      max-width: 100%;
       transition: border-color 0.15s, box-shadow 0.15s;
     }
 
@@ -86,10 +87,17 @@
       color: #666;
     }
 
+    .input-group-append {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
     /* ── Buttons (general) ──────────────────────────────────────── */
     button {
       height: 40px;
       min-width: 40px;
+      min-height: 44px;   /* touch target */
       padding: 0 0.75rem;
       border: none;
       border-radius: 6px;
@@ -103,7 +111,7 @@
     /* Move up/down */
     .move-up, .move-down {
       width: 36px;
-      min-width: 36px;
+      min-width: 44px;   /* touch target */
       background: #f0ece4;
       color: #5a4a3a;
       font-size: 1rem;
@@ -116,6 +124,7 @@
       color: #c0392b;
       font-size: 0.85rem;
       border: 1px solid #f5c6c2;
+      white-space: nowrap;
     }
     .del-item:hover { background: #f8d7d4; }
 
@@ -179,6 +188,7 @@
     }
 
     #results input.result {
+      width: 100%;
       max-width: 100%;
       background: #fff;
       font-size: 1.05rem;
@@ -192,6 +202,7 @@
     #here_table {
       margin-bottom: 1.5rem;
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;  /* smooth scroll on iOS */
     }
 
     table.res_table {
@@ -235,6 +246,72 @@
 
     .info-panel p { margin: 0; }
     .info-panel p + p { margin-top: 0.25rem; }
+
+    /* ── Mobile ─────────────────────────────────────────────────── */
+    @media (max-width: 600px) {
+
+      body {
+        padding: 1rem;
+      }
+
+      h1.page-title {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+      }
+
+      /* Word row wraps into stacked lines */
+      .word-div {
+        flex-wrap: wrap;
+      }
+
+      /* Move buttons sit on the far ends of the top line */
+      .move-up   { order: 0; flex-shrink: 0; }
+      .move-down { order: 4; flex-shrink: 0; }
+
+      /* Word input fills its own row */
+      .word-div .word {
+        flex: 1 1 calc(100% - 100px);
+        order: 1;
+      }
+
+      /* Prop + delete share a row below the word input */
+      .input-group-append {
+        flex: 1 1 100%;
+        order: 2;
+      }
+
+      .word-div .prop {
+        flex: 1 1 0;
+        max-width: 100%;
+      }
+
+      /* Add Word button goes full width */
+      #add_word {
+        width: 100%;
+        text-align: center;
+      }
+
+      /* Metre row stacks vertically */
+      .metre-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      #check {
+        width: 100%;
+        text-align: center;
+      }
+
+      #metres {
+        width: 100%;
+        min-width: unset;
+      }
+
+      /* Info panel slightly tighter text */
+      .info-panel {
+        font-size: 0.82rem;
+      }
+    }
   </style>
 </head>
 <body>
