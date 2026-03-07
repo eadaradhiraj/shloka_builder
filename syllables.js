@@ -7,8 +7,9 @@ const mahapranas   = {
     "Th": "V", "Dh": "X", "th": "Y", "dh": "F",
     "ph": "P", "bh": "B"
 };
+const coda_only = ["H", "M"];
 
-// FIX: removed duplicate `swap` — `inverse` is identical and better named
+
 function inverse(obj) {
     const ret = {};
     for (const key in obj) {
@@ -17,8 +18,7 @@ function inverse(obj) {
     return ret;
 }
 
-// FIX: added si === 0 guard to prevent arr[-1] TypeError
-// FIX: slice(0, arr[si-1].length - 1) → slice(0, -1)
+
 function shiftch2aft(arr, si) {
     if (si === 0) return arr;
     arr[si]     = arr[si - 1].slice(-1) + arr[si];
@@ -26,57 +26,63 @@ function shiftch2aft(arr, si) {
     return arr;
 }
 
+
 function syllabalize(st) {
-    // Replace mahāprāṇa digraphs with single placeholder characters
     st = allreplace(st, mahapranas);
 
-    let arr        = [""];
-    let si         = 0;
-    let split_next = false;
+    let arr           = [""];
+    let si            = 0;
+    let split_next    = false;
+    let coda_consumed = false;
 
     for (let i = 0; i < st.length; i++) {
-        const c        = st[i];
-        const next_ch  = st[i + 1];  // may be undefined at end-of-string; handled safely below
+        const c       = st[i];
+        const next_ch = st[i + 1];
 
-        // Pass through non-space characters, or a space followed by a vowel
-        // (the space+vowel case keeps vowel-initial words attached correctly)
         if (c !== ' ' || vowels.includes(next_ch)) {
 
             if (!vowels.includes(c)) {
-                // ── Consonant ───────────────────────────────────────────────
-                // FIX: split BEFORE appending so the consonant starts the new syllable,
-                //      not ends the old one
-                if (split_next) {
-                    si += 1;
-                    arr.push("");
-                    split_next = false;
-                }
+                // ── Consonant ──────────────────────────────────────────────
 
-                arr[si] += c;
+                if (coda_only.includes(c)) {
+                    // Visarga / anusvāra — always coda, never opens new syllable
+                    arr[si] += c;
+                } else {
+                    if (split_next) {
+                        if (!coda_consumed && !coda_only.includes(c) && !vowels.includes(next_ch)) {
+                            // Only take as coda if next char is also a consonant
+                            coda_consumed = true;
+                        } else if (!coda_only.includes(c)) {
+                            // Open new syllable
+                            si += 1;
+                            arr.push("");
+                            split_next    = false;
+                            coda_consumed = false;
+                        }
+                    }
 
-                // FIX: mahāprāṇa detection — check last char of previous syllable,
-                //      not the entire syllable string against the vowels array
-                //      (vowels.includes("ka") is always false — old code never ran)
-                if (c === "h" && si > 0 && !vowels.includes(arr[si - 1].slice(-1))) {
-                    arr = shiftch2aft(arr, si);
+
+                    arr[si] += c;
+
+                    if (c === "h" && si > 0 && !vowels.includes(arr[si - 1].slice(-1))) {
+                        arr = shiftch2aft(arr, si);
+                    }
                 }
 
             } else {
-                // ── Vowel ────────────────────────────────────────────────────
+                // ── Vowel ──────────────────────────────────────────────────
                 arr[si] += c;
 
-                // If this vowel is the only character so far in this slot,
-                // attach it to the previous syllable (e.g. diphthong / hiatus)
                 if (arr[si].length === 1 && arr[si - 1] !== undefined) {
                     arr = shiftch2aft(arr, si);
                 }
 
-                split_next = true;
+                split_next    = true;
+                coda_consumed = false;
             }
         }
     }
 
-    // Remove empty slots and restore mahāprāṇa digraphs
     const inv_mahapranas = inverse(mahapranas);
     return arr
         .filter(s => s !== "")
