@@ -1,86 +1,381 @@
-<html>
-<title>
-  Shloka Builder
-</title>
+<!DOCTYPE html>
+<html lang="sa">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shloka Builder</title>
   <style>
-  table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-  }
-  .text-success {
-    color: blue
-  }
-  .text-danger {
-    color: red
-  }
-  button {
-    height:50px;
-    width:50px;
-  }
-  input {
-    height:50px;
-    width:200px;
-  }
+    /* ── Reset & base ───────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: #f5f4f0;
+      color: #2c2c2c;
+      padding: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ── Page title ─────────────────────────────────────────────── */
+    h1.page-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #4a3728;
+      border-bottom: 2px solid #c8b89a;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── Word list ──────────────────────────────────────────────── */
+    #sortable1 {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .list-group-item {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      transition: background 0.15s, box-shadow 0.15s;
+    }
+
+    .list-group-item:hover {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .list-group-item.selected {
+      background: #eaf0fb;
+      border-color: #7aa3d4;
+      box-shadow: 0 0 0 2px #7aa3d480;
+    }
+
+    /* ── Word row layout ────────────────────────────────────────── */
+    .word-div {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .word-div input[type="text"] {
+      flex: 1;
+      height: 40px;
+      padding: 0 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      background: #fafafa;
+      max-width: 100%;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .word-div input[type="text"]:focus {
+      outline: none;
+      border-color: #7aa3d4;
+      box-shadow: 0 0 0 2px #7aa3d430;
+      background: #fff;
+    }
+
+    .prop {
+      max-width: 200px;
+      font-size: 0.85rem !important;
+      color: #666;
+    }
+
+    .input-group-append {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* ── Buttons (general) ──────────────────────────────────────── */
+    button {
+      height: 40px;
+      min-width: 40px;
+      min-height: 44px;   /* touch target */
+      padding: 0 0.75rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    button:active { transform: scale(0.96); }
+
+    /* Move up/down */
+    .move-up, .move-down {
+      width: 36px;
+      min-width: 44px;   /* touch target */
+      background: #f0ece4;
+      color: #5a4a3a;
+      font-size: 1rem;
+    }
+    .move-up:hover, .move-down:hover { background: #e0d8cc; }
+
+    /* Delete */
+    .del-item {
+      background: #fdecea;
+      color: #c0392b;
+      font-size: 0.85rem;
+      border: 1px solid #f5c6c2;
+      white-space: nowrap;
+    }
+    .del-item:hover { background: #f8d7d4; }
+
+    /* Add Word */
+    #add_word {
+      background: #4a7c59;
+      color: #fff;
+      padding: 0 1.25rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+    #add_word:hover { background: #3d6b4a; }
+
+    /* Check */
+    #check {
+      background: #2e6da4;
+      color: #fff;
+      padding: 0 1.5rem;
+      font-weight: 600;
+    }
+    #check:hover { background: #255d8e; }
+
+    /* ── Metre selector row ─────────────────────────────────────── */
+    .metre-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 1rem 0 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .metre-row label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #4a3728;
+      white-space: nowrap;
+    }
+
+    #metres {
+      height: 40px;
+      padding: 0 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      background: #fff;
+      cursor: pointer;
+      min-width: 220px;
+    }
+    #metres:focus {
+      outline: none;
+      border-color: #7aa3d4;
+      box-shadow: 0 0 0 2px #7aa3d430;
+    }
+
+    /* ── Results ────────────────────────────────────────────────── */
+    #results {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    #results input.result {
+      width: 100%;
+      max-width: 100%;
+      background: #fff;
+      font-size: 1.05rem;
+      border: 1px solid #c8b89a;
+      border-radius: 6px;
+      padding: 0 0.75rem;
+      color: #2c2c2c;
+    }
+
+    /* ── Syllable table ─────────────────────────────────────────── */
+    #here_table {
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;  /* smooth scroll on iOS */
+    }
+
+    table.res_table {
+      border-collapse: collapse;
+      font-size: 0.95rem;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    }
+
+    table.res_table th,
+    table.res_table td {
+      border: 1px solid #ddd;
+      padding: 0.4rem 0.75rem;
+      text-align: center;
+      min-width: 2rem;
+    }
+
+    table.res_table tr:last-child td {
+      background: #f5f4f0;
+      color: #888;
+      font-size: 0.8rem;
+    }
+
+    /* ── Laghu / Guru colours ───────────────────────────────────── */
+    .text-success { color: #2e7d32; font-weight: 600; }
+    .text-danger  { color: #c62828; font-weight: 600; }
+
+    /* ── Info panel ─────────────────────────────────────────────── */
+    .info-panel {
+      background: #fdf8f0;
+      border: 1px solid #e8dcc8;
+      border-left: 4px solid #c8a96e;
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      font-size: 0.88rem;
+      color: #5a4a3a;
+      line-height: 1.7;
+    }
+
+    .info-panel p { margin: 0; }
+    .info-panel p + p { margin-top: 0.25rem; }
+
+    /* ── Mobile ─────────────────────────────────────────────────── */
+    @media (max-width: 600px) {
+
+      body {
+        padding: 1rem;
+      }
+
+      h1.page-title {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+      }
+
+      /* Word row wraps into stacked lines */
+      .word-div {
+        flex-wrap: wrap;
+      }
+
+      /* Move buttons sit on the far ends of the top line */
+      .move-up   { order: 0; flex-shrink: 0; }
+      .move-down { order: 4; flex-shrink: 0; }
+
+      /* Word input fills its own row */
+      .word-div .word {
+        flex: 1 1 calc(100% - 100px);
+        order: 1;
+      }
+
+      /* Prop + delete share a row below the word input */
+      .input-group-append {
+        flex: 1 1 100%;
+        order: 2;
+      }
+
+      .word-div .prop {
+        flex: 1 1 0;
+        max-width: 100%;
+      }
+
+      /* Add Word button goes full width */
+      #add_word {
+        width: 100%;
+        text-align: center;
+      }
+
+      /* Metre row stacks vertically */
+      .metre-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      #check {
+        width: 100%;
+        text-align: center;
+      }
+
+      #metres {
+        width: 100%;
+        min-width: unset;
+      }
+
+      /* Info panel slightly tighter text */
+      .info-panel {
+        font-size: 0.82rem;
+      }
+    }
   </style>
-  </head>
+</head>
 <body>
-  <button class="btn btn-primary" id="add_word" onclick="addWord(this)">Add Word</button>
+
+  <h1 class="page-title">Shloka Builder</h1>
+
+  <button class="btn btn-primary" id="add_word" onclick="addWord(this)">+ Add Word</button>
 
   <ul id="sortable1" class="connectedSortable list-group list-group-vertical mb-5">
     <li class="list-group-item">
       <div class="input-group word-div">
-        <button class="btn move-up" onclick="move(this, 'up')">↑</button>
-        <input type="text" class="word form-control" placeholder="enter a word">
+        <button class="btn move-up"  onclick="move(this, 'up')">↑</button>
+        <input type="text" class="word form-control" placeholder="Enter a word">
         <div class="input-group-append" id="button-addon4">
-          <input type="text" class="prop form-control" placeholder="enter a property if applicable">
-          <button class="btn btn-outline-secondary del-item" onclick="del_word(this)" type="button">delete</button>
+          <input type="text" class="prop form-control" placeholder="Property (optional)">
+          <button class="btn btn-outline-secondary del-item" onclick="del_word(this)" type="button">Delete</button>
         </div>
         <button class="btn move-down" onclick="move(this, 'down')">↓</button>
       </div>
     </li>
-</ul>
+  </ul>
 
-  <button id="check" class="btn btn-success" onclick="loop_objs()">Check</button>
-  <label for="cars">Choose your metre:</label>
-  <select name="metres" id="metres">
-    <option value="anushtup">Anushtup</option>
-    <option value="indravajra">Indravajra</option>
-    <option value="upendravajra">Upendravajra</option>
-    <option value="upajAti">Upajati</option>
-    <option value="shalini">Shalini</option>
-    <option value="bhujangaprayAta">bhujangaprayAta</option>
-    <option value="druta-vilambita">druta-vilambita</option>
-    <option value="chandriNI">chandrini</option>
-    <option value="mAlinI">mAlinI</option>
-    <option value="totakam">totakam</option>
-    <option value="pancAmaram">pancAmaram</option>
-    <option value="shikhariNI">shikhariNI</option>
-    <option value="mandAkrAntA">mandAkrAntA</option>
-    <option value="shArdUla-vikrIditam">shArdUla-vikrIditam</option>
-    <option value="sragdhaaraa">sragdhaaraa</option>
-    <option value="Vamshastha">Vamshastha</option>
-    <option value="vasantatilaka">vasantatilaka</option>
-    <option value="rathoddhatA">rathoddhatA</option>
-  </select>
-  <div id="results" class="input-group word-div"></div>
-  <div id="here_table" class="table"></div>
-
-  <div>
-    <p>Not to be used for creation of samasas</p>
-    <p>In case of multiple options, first is to be preferred</p>
-    <p>If word pronoun then please add "pronoun" in property of that word</p>
-    <p>If word dual then please add "dual" in property of that word</p>
-    <p>If word is an interjection among the following ओ, अहो, हो, आहो, उताहो, नो, अथो then add "interjection" as property of that word</p>
+  <div class="metre-row">
+    <button id="check" class="btn btn-success" onclick="loop_objs()">Check</button>
+    <label for="metres">Metre:</label>
+    <select name="metres" id="metres">
+      <option value="anushtup">Anushtup</option>
+      <option value="indravajra">Indravajra</option>
+      <option value="upendravajra">Upendravajra</option>
+      <option value="upajAti">Upajati</option>
+      <option value="shalini">Shalini</option>
+      <option value="bhujangaprayAta">Bhujangaprayāta</option>
+      <option value="druta-vilambita">Druta-vilambita</option>
+      <option value="chandriNI">Chandriṇī</option>
+      <option value="mAlinI">Mālinī</option>
+      <option value="totakam">Totakam</option>
+      <option value="pancAmaram">Pañcāmaram</option>
+      <option value="shikhariNI">Śikhariṇī</option>
+      <option value="mandAkrAntA">Mandākrāntā</option>
+      <option value="shArdUla-vikrIditam">Śārdūla-vikrīḍitam</option>
+      <option value="sragdhaaraa">Sragdharā</option>
+      <option value="Vamshastha">Vaṃśastha</option>
+      <option value="vasantatilaka">Vasantatilaka</option>
+      <option value="rathoddhatA">Rathoddhatā</option>
+    </select>
   </div>
 
+  <div id="results"></div>
+  <div id="here_table"></div>
+
+  <div class="info-panel">
+    <p>Not to be used for creation of samāsas.</p>
+    <p>In case of multiple options, the first is to be preferred.</p>
+    <p>If a word is a pronoun, add <strong>pronoun</strong> in its property field.</p>
+    <p>If a word is a dual, add <strong>dual</strong> in its property field.</p>
+    <p>If a word is an interjection (ओ, अहो, हो, आहो, उताहो, नो, अथो), add <strong>interjection</strong> as its property.</p>
+  </div>
+
+  <script src="common_utils.js"></script>
+  <script src="dev_to_kh.js"></script>
+  <script src="kh_to_dev.js"></script>
+  <script src="sandhi.js"></script>
+  <script src="syllables.js"></script>
+  <script src="sloka_builder_utils.js"></script>
 
 </body>
-<script src="common_utils.js"></script>
-<script src="dev_to_kh.js"></script>
-<script src="kh_to_dev.js"></script>
-<script src="sandhi.js"></script>
-<script src="syllables.js"></script>
-<script src="sloka_builder_utils.js"></script>
-
 </html>
