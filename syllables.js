@@ -7,7 +7,9 @@ const mahapranas   = {
     "Th": "V", "Dh": "X", "th": "Y", "dh": "F",
     "ph": "P", "bh": "B"
 };
-const coda_only = ["H", "M"];
+const coda_only    = ["H", "M"];
+// Consonants that can form an aspirate (mahāprāṇa) with 'h': k,g,c,j,T,D,t,d,p,b
+const aspiratable  = new Set(["k", "g", "c", "j", "T", "D", "t", "d", "p", "b"]);
 
 
 function inverse(obj) {
@@ -64,7 +66,7 @@ function syllabalize(st) {
 
                     arr[si] += c;
 
-                    if (c === "h" && si > 0 && !vowels.includes(arr[si - 1].slice(-1))) {
+                    if (c === "h" && si > 0 && aspiratable.has(arr[si - 1].slice(-1))) {
                         arr = shiftch2aft(arr, si);
                     }
                 }
