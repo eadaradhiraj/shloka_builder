@@ -51,7 +51,7 @@ function sandhi_join(arrs) {
         ) {
             if (lhst.endsWith("mU") || lhst.endsWith("mI")) {
                 pushjoin(result, prop, lhst + " " + rhst);
-            } else if (["e","o","i","I","u","U","c","d","D","h","k","l","m","b","n","p","t","T", "y", "v","A","z"].includes(rhst[0])) {
+            } else if (["e","o","i","I","u","U","c","d","D","h","g","l","m","b","n","p","t","T", "y", "v","A","z"].includes(rhst[0])) {
                 // FIX: deduped "h" from original list
                 pushjoin(result, prop, lhst.slice(0, -1) + " " + rhst);
             } else if (rhst[0] === "a") {
