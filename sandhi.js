@@ -1,32 +1,33 @@
 "use strict";
 
-// ─── Character class constants ────────────────────────────────────────────────
-const NASALS            = ["n", "m", "J", "G", "N"];
-const VOWELS            = ["a", "A", "i", "I", "u", "U", "e", "o", "R"];
-const SONORANTS_AFTER_Z = ["a", "A", "i", "I", "u", "U", "e", "o", "R", "y", "r", "l", "v"];
-const VOICED_INITIALS   = ["a", "A", "e", "o", "i", "I", "u", "U", "y", "r", "v", "b", "g", "d", "D", "R"];
+// ─── Character class constants (Now in SLP1) ──────────────────────────────────
+// n, m, ñ, ṅ, ṇ
+const NASALS            = ["n", "m", "Y", "N", "R"];
+// a, A, i, I, u, U, e, ai, o, au, ṛ, ṝ
+const VOWELS            = ["a", "A", "i", "I", "u", "U", "e", "E", "o", "O", "f", "F"];
+const SONORANTS_AFTER_S = ["a", "A", "i", "I", "u", "U", "e", "E", "o", "O", "f", "F", "y", "r", "l", "v"];
+const VOICED_INITIALS   = ["a", "A", "e", "E", "o", "O", "i", "I", "u", "U", "y", "r", "v", "b", "g", "d", "q", "f", "F"];
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-// FIX: removed misleading `return result`; result is mutated in place
 function pushjoin(result, prop, st) {
     result.push({ st, prop });
 }
 
-// Extracted: the repeated "z + sonorant → cch, else space" pattern
-function handleZ(result, prop, lhst, rhst) {
-    if (SONORANTS_AFTER_Z.includes(rhst[1])) {
-        pushjoin(result, prop, lhst.slice(0, -1) + "cch" + rhst.slice(1));
+// HK 'z' (ś) is now SLP1 'S'. 
+// HK 'cch' is now SLP1 'cC'.
+function handleS(result, prop, lhst, rhst) {
+    if (SONORANTS_AFTER_S.includes(rhst[1])) {
+        pushjoin(result, prop, lhst.slice(0, -1) + "cC" + rhst.slice(1));
         pushjoin(result, prop, lhst + " " + rhst);
     } else {
         pushjoin(result, prop, lhst + " " + rhst);
     }
 }
 
-// Extracted: consolidates th/dh/ph/bh/gh/kh/jh which only differ in nasalChar
 function handleAspirate(result, prop, lhst, rhst, nasalChar) {
-    if (rhst[0] === "z") {
-        handleZ(result, prop, lhst, rhst);
+    if (rhst[0] === "S") {
+        handleS(result, prop, lhst, rhst);
     } else if (NASALS.includes(rhst[0])) {
         pushjoin(result, prop, lhst.slice(0, -1) + nasalChar + rhst);
     } else {
@@ -43,16 +44,15 @@ function sandhi_join(arrs) {
         const rhst = rhs.st;
         const prop  = rhs.prop;
 
-        // ── Pronoun special cases (saH, eSaH, mU, mI) ──────────────────────
+        // ── Pronoun special cases (saH, ezaH, mU, mI) ──────────────────────
         if (
-            (lhst.endsWith("saH") || lhst.endsWith("eSaH") ||
+            (lhst.endsWith("saH") || lhst.endsWith("ezaH") ||
              lhst.endsWith("mU")  || lhst.endsWith("mI")) &&
             lhs.prop === "pronoun"
         ) {
             if (lhst.endsWith("mU") || lhst.endsWith("mI")) {
                 pushjoin(result, prop, lhst + " " + rhst);
-            } else if (["e","o","i","I","u","U","c","d","D","h","g","l","m","b","n","p","t","T", "y", "v","A","z"].includes(rhst[0])) {
-                // FIX: deduped "h" from original list
+            } else if (["e","E","o","O","i","I","u","U","c","d","q","h","g","l","m","b","n","p","t","w","y","v","A","S"].includes(rhst[0])) {
                 pushjoin(result, prop, lhst.slice(0, -1) + " " + rhst);
             } else if (rhst[0] === "a") {
                 pushjoin(result, prop, lhst.slice(0, -2) + "o'" + rhst.slice(1));
@@ -60,11 +60,11 @@ function sandhi_join(arrs) {
                 pushjoin(result, prop, lhst + " " + rhst);
             }
 
-        // ── Vocalic R (ṛ) ───────────────────────────────────────────────────
-        } else if (lhst.endsWith("R")) {
-            if (["a","A","i","I","u","U","o"].includes(rhst[0])) {
+        // ── Vocalic ṛ (SLP1: f) ─────────────────────────────────────────────
+        } else if (lhst.endsWith("f")) {
+            if (["a","A","i","I","u","U","e","E","o","O"].includes(rhst[0])) {
                 pushjoin(result, prop, lhst.slice(0, -1) + "r" + rhst);
-            } else if (rhst[0] === "R") {
+            } else if (rhst[0] === "f") {
                 pushjoin(result, prop, lhst + rhst);
             } else {
                 pushjoin(result, prop, lhst + " " + rhst);
@@ -75,12 +75,12 @@ function sandhi_join(arrs) {
             if (rhst[0] === "r") {
                 const elongd = { a: "A", A: "A", i: "I", I: "I", u: "U", U: "U" };
                 pushjoin(result, prop, lhst.slice(0, -2) + elongd[lhst.slice(-2, -1)] + rhst);
-            } else if (["n","g","j","a","A","i","I","u","U","d","D","m","y","b","l","v","h"].includes(rhst[0])) {
+            } else if (["n","g","j","a","A","i","I","u","U","d","q","m","y","b","l","v","h","e","E","o","O"].includes(rhst[0])) {
                 pushjoin(result, prop, lhst.slice(0, -1) + "r" + rhst);
             } else if (rhst[0] === "c") {
-                pushjoin(result, prop, lhst.slice(0, -1) + "z" + rhst);
-            } else if (rhst[0] === "T") {
                 pushjoin(result, prop, lhst.slice(0, -1) + "S" + rhst);
+            } else if (rhst[0] === "w") {
+                pushjoin(result, prop, lhst.slice(0, -1) + "z" + rhst);
             } else if (rhst[0] === "t") {
                 pushjoin(result, prop, lhst.slice(0, -1) + "s" + rhst);
             } else {
@@ -93,35 +93,36 @@ function sandhi_join(arrs) {
                 pushjoin(result, prop, lhst + rhst);
             } else if (rhst[0] === "t") {
                 pushjoin(result, prop, lhst.slice(0, -1) + "Ms" + rhst);
-            } else if (rhst[0] === "D") {
-                pushjoin(result, prop, lhst.slice(0, -1) + "N" + rhst);
-            } else if (rhst[0] === "T") {
-                pushjoin(result, prop, lhst.slice(0, -1) + "MS" + rhst);
-            } else if (rhst[0] === "j") {
-                pushjoin(result, prop, lhst.slice(0, -1) + "J" + rhst);
-            } else if (rhst[0] === "c") {
+            } else if (rhst[0] === "q") { // ḍ
+                pushjoin(result, prop, lhst.slice(0, -1) + "R" + rhst);
+            } else if (rhst[0] === "w") { // ṭ
                 pushjoin(result, prop, lhst.slice(0, -1) + "Mz" + rhst);
-            } else if (rhst[0] === "z") {
-                pushjoin(result, prop, lhst.slice(0, -1) + "Jch" + rhst.slice(1));
+            } else if (rhst[0] === "j") {
+                pushjoin(result, prop, lhst.slice(0, -1) + "Y" + rhst);
+            } else if (rhst[0] === "c") {
+                pushjoin(result, prop, lhst.slice(0, -1) + "MS" + rhst);
+            } else if (rhst[0] === "S") { // ś
+                pushjoin(result, prop, lhst.slice(0, -1) + "YC" + rhst.slice(1));
             } else {
                 pushjoin(result, prop, lhst + " " + rhst);
             }
 
-        // ── Final -ai / -au ─────────────────────────────────────────────────
-        } else if (lhst.endsWith("ai") || lhst.endsWith("au")) {
+        // ── Final -ai / -au (SLP1: E / O) ───────────────────────────────────
+        } else if (lhst.endsWith("E") || lhst.endsWith("O")) {
             if (VOWELS.includes(rhst[0])) {
-                const aiudict = { ai: "y", au: "v" };
-                const ending  = lhst.endsWith("ai") ? "ai" : "au";
-                pushjoin(result, prop, lhst.slice(0, -2) + "A " + rhst);
-                pushjoin(result, prop, lhst.slice(0, -2) + "A" + aiudict[ending] + rhst); // not used in practice
+                const aiudict = { E: "y", O: "v" };
+                const ending  = lhst.endsWith("E") ? "E" : "O";
+                // Now slicing only 1 char because E and O are single chars!
+                pushjoin(result, prop, lhst.slice(0, -1) + "A " + rhst);
+                pushjoin(result, prop, lhst.slice(0, -1) + "A" + aiudict[ending] + rhst); 
             } else {
                 pushjoin(result, prop, lhst + " " + rhst);
             }
 
         // ── Final -a / -A ───────────────────────────────────────────────────
         } else if (lhst.endsWith("a") || lhst.endsWith("A")) {
-            const adict = { a: "A", A: "A", i: "e", I: "e", u: "o", U: "o", R: "ar", e: "ai", o: "u" };
-            if (rhst.startsWith("ai") || rhst.startsWith("au")) {
+            const adict = { a: "A", A: "A", i: "e", I: "e", u: "o", U: "o", f: "ar", e: "E", E: "E", o: "O", O: "O" };
+            if (rhst.startsWith("E") || rhst.startsWith("O")) {
                 pushjoin(result, prop, lhst.slice(0, -1) + rhst);
             } else if (Object.hasOwn(adict, rhst[0])) {
                 pushjoin(result, prop, lhst.slice(0, -1) + adict[rhst[0]] + rhst.slice(1));
@@ -131,7 +132,7 @@ function sandhi_join(arrs) {
 
         // ── Final -i / -I ───────────────────────────────────────────────────
         } else if (lhst.endsWith("i") || lhst.endsWith("I")) {
-            const vowelarr = ["a", "A", "e", "o", "R", "u", "U"];
+            const vowelarr = ["a", "A", "e", "E", "o", "O", "f", "u", "U"];
             if (vowelarr.includes(rhst[0]) && lhs.prop !== "dual") {
                 pushjoin(result, prop, lhst.slice(0, -1) + "y" + rhst);
             } else if ((rhst[0] === "i" || rhst[0] === "I") && lhs.prop !== "dual") {
@@ -142,8 +143,7 @@ function sandhi_join(arrs) {
 
         // ── Final -u / -U ───────────────────────────────────────────────────
         } else if (lhst.endsWith("u") || lhst.endsWith("U")) {
-            // FIX: declared `jst` inline; was an implicit global in original
-            const vowelarr = ["a", "A", "e", "o", "R", "i", "I"];
+            const vowelarr = ["a", "A", "e", "E", "o", "O", "f", "i", "I"];
             if (vowelarr.includes(rhst[0]) && lhs.prop !== "dual") {
                 pushjoin(result, prop, lhst.slice(0, -1) + "v" + rhst);
             } else if ((rhst[0] === "u" || rhst[0] === "U") && lhs.prop !== "dual") {
@@ -156,15 +156,14 @@ function sandhi_join(arrs) {
         } else if (lhst.endsWith("e") || lhst.endsWith("o")) {
             if (lhst.endsWith("o") && lhs.prop === "interjection") {
                 pushjoin(result, prop, lhst + " " + rhst);
-            } else if (rhst.startsWith("au") || rhst.startsWith("ai")) {
+            } else if (rhst.startsWith("O") || rhst.startsWith("E")) {
                 const auieodict = { o: "v", e: "y" };
                 pushjoin(result, prop, lhst.slice(0, -1) + "a " + rhst);
-                pushjoin(result, prop, lhst.slice(0, -1) + "a" + auieodict[lhst.slice(-1)] + rhst); // not used in practice
-            } else if (["i","I","u","U","e","o","R"].includes(rhst[0])) {
-                // FIX: removed dead `rhst[0] === "u"` branch that followed this (u already covered here)
+                pushjoin(result, prop, lhst.slice(0, -1) + "a" + auieodict[lhst.slice(-1)] + rhst);
+            } else if (["i","I","u","U","e","o","f","E","O"].includes(rhst[0])) {
                 const aiudict = { e: "y", o: "v" };
                 pushjoin(result, prop, lhst.slice(0, -1) + "a " + rhst);
-                pushjoin(result, prop, lhst.slice(0, -1) + "a" + aiudict[lhst.slice(-1)] + rhst); // not used in practice
+                pushjoin(result, prop, lhst.slice(0, -1) + "a" + aiudict[lhst.slice(-1)] + rhst); 
             } else if (rhst[0] === "a") {
                 pushjoin(result, prop, lhst + "'" + rhst.slice(1));
             } else if (rhst[0] === "A") {
@@ -177,15 +176,14 @@ function sandhi_join(arrs) {
         } else if (lhst.endsWith("aH")) {
             if (rhst[0] === "a") {
                 pushjoin(result, prop, lhst.slice(0, -2) + "o'" + rhst.slice(1));
-            } else if (["e","o","i","u","U","A"].includes(rhst[0])) {
+            } else if (["e","E","o","O","i","I","u","U","A","f","F"].includes(rhst[0])) {
                 pushjoin(result, prop, lhst.slice(0, -1) + " " + rhst);
             } else if (rhst[0] === "c") {
-                pushjoin(result, prop, lhst.slice(0, -1) + "z" + rhst);
-            } else if (["y","l","r","h","v","m","n","b","g","j","d"].includes(rhst[0])) {
+                pushjoin(result, prop, lhst.slice(0, -1) + "S" + rhst);
+            } else if (["y","l","r","h","v","m","n","b","g","j","d","q"].includes(rhst[0])) {
                 pushjoin(result, prop, lhst.slice(0, -2) + "o " + rhst);
-            } else if (rhst[0] === "t" || rhst[0] === "T") {
-                // FIX: was an implicit global in original
-                const tTvisdict = { t: "s", T: "S" };
+            } else if (rhst[0] === "t" || rhst[0] === "w") {
+                const tTvisdict = { t: "s", w: "z" };
                 pushjoin(result, prop, lhst.slice(0, -1) + tTvisdict[rhst[0]] + rhst);
             } else {
                 pushjoin(result, prop, lhst + " " + rhst);
@@ -193,15 +191,14 @@ function sandhi_join(arrs) {
 
         // ── Final -AH ───────────────────────────────────────────────────────
         } else if (lhst.endsWith("AH")) {
-            if (["a","e","o","i","u","U","A"].includes(rhst[0])) {
+            if (["a","e","E","o","O","i","I","u","U","A","f","F"].includes(rhst[0])) {
                 pushjoin(result, prop, lhst.slice(0, -1) + " " + rhst);
-            } else if (["y","l","r","h","v","m","n","b","g","j","d"].includes(rhst[0])) {
+            } else if (["y","l","r","h","v","m","n","b","g","j","d","q"].includes(rhst[0])) {
                 pushjoin(result, prop, lhst.slice(0, -1) + " " + rhst);
             } else if (rhst[0] === "c") {
-                pushjoin(result, prop, lhst.slice(0, -1) + "z" + rhst);
-            } else if (rhst[0] === "t" || rhst[0] === "T") {
-                // FIX: was an implicit global in original
-                const tTvisdict = { t: "s", T: "S" };
+                pushjoin(result, prop, lhst.slice(0, -1) + "S" + rhst);
+            } else if (rhst[0] === "t" || rhst[0] === "w") {
+                const tTvisdict = { t: "s", w: "z" };
                 pushjoin(result, prop, lhst.slice(0, -1) + tTvisdict[rhst[0]] + rhst);
             } else {
                 pushjoin(result, prop, lhst + " " + rhst);
@@ -209,65 +206,65 @@ function sandhi_join(arrs) {
 
         // ── Final -H (generic visarga) ──────────────────────────────────────
         } else if (lhst.endsWith("H")) {
-            if (rhst[0] === "t" || rhst[0] === "T") {
-                const tTvisdict = { t: "s", T: "S" };
+            if (rhst[0] === "t" || rhst[0] === "w") {
+                const tTvisdict = { t: "s", w: "z" };
                 pushjoin(result, prop, lhst.slice(0, -1) + tTvisdict[rhst[0]] + rhst);
-            } else if (["a","A","i","I","u","U","o","y","l","h","v","m","n","e","b","g","j","d"].includes(rhst[0])) {
+            } else if (["a","A","i","I","u","U","e","E","o","O","f","y","l","h","v","m","n","b","g","j","d","q"].includes(rhst[0])) {
                 pushjoin(result, prop, lhst.slice(0, -1) + "r" + rhst);
             } else if (["i","u","e"].includes(lhst.slice(-2, -1)) && rhst[0] === "r") {
                 const iudict = { i: "I ", u: "U ", e: "e " };
                 pushjoin(result, prop, lhst.slice(0, -2) + iudict[lhst.slice(-2, -1)] + rhst);
             } else if (rhst[0] === "c") {
-                pushjoin(result, prop, lhst.slice(0, -1) + "z" + rhst);
+                pushjoin(result, prop, lhst.slice(0, -1) + "S" + rhst);
             } else {
                 pushjoin(result, prop, lhst + " " + rhst);
             }
 
-        // ── Final -T (retroflex) ─────────────────────────────────────────────
-        } else if (lhst.endsWith("T")) {
+        // ── Final -w (ṭ) ─────────────────────────────────────────────
+        } else if (lhst.endsWith("w")) {
             if (VOICED_INITIALS.includes(rhst[0])) {
-                pushjoin(result, prop, lhst.slice(0, -1) + "D" + rhst);
-            } else if (rhst[0] === "z") {
-                handleZ(result, prop, lhst, rhst);
+                pushjoin(result, prop, lhst.slice(0, -1) + "q" + rhst);
+            } else if (rhst[0] === "S") {
+                handleS(result, prop, lhst, rhst);
             } else if (rhst[0] === "h") {
-                pushjoin(result, prop, lhst.slice(0, -1) + "DD" + rhst);
-                pushjoin(result, prop, lhst.slice(0, -1) + "D " + rhst);
+                pushjoin(result, prop, lhst.slice(0, -1) + "qq" + rhst);
+                pushjoin(result, prop, lhst.slice(0, -1) + "q " + rhst);
             } else if (rhst.startsWith("nAm") || rhst.startsWith("nagar") || rhst.endsWith("navat")) {
-                pushjoin(result, prop, lhst.slice(0, -1) + "NN" + rhst.slice(1));
+                pushjoin(result, prop, lhst.slice(0, -1) + "RR" + rhst.slice(1));
             } else if (NASALS.includes(rhst[0])) {
-                pushjoin(result, prop, lhst.slice(0, -1) + "N" + rhst);
+                pushjoin(result, prop, lhst.slice(0, -1) + "R" + rhst);
             } else {
                 pushjoin(result, prop, lhst + " " + rhst);
             }
 
-        // ── Final -D (retroflex) ─────────────────────────────────────────────
-        } else if (lhst.endsWith("D")) {
-            if (rhst[0] === "z") {
-                handleZ(result, prop, lhst, rhst);
+        // ── Final -q (ḍ) ─────────────────────────────────────────────
+        } else if (lhst.endsWith("q")) {
+            if (rhst[0] === "S") {
+                handleS(result, prop, lhst, rhst);
             } else if (rhst.startsWith("nAm") || rhst.startsWith("nagar") || rhst.endsWith("navat")) {
-                pushjoin(result, prop, lhst.slice(0, -1) + "NN" + rhst.slice(1));
+                pushjoin(result, prop, lhst.slice(0, -1) + "RR" + rhst.slice(1));
             } else if (NASALS.includes(rhst[0])) {
-                pushjoin(result, prop, lhst.slice(0, -1) + "N" + rhst);
+                pushjoin(result, prop, lhst.slice(0, -1) + "R" + rhst);
             } else {
                 pushjoin(result, prop, lhst + " " + rhst);
             }
 
-        // ── Final -th / -dh / -ph / -bh / -gh / -kh / -jh (aspirates) ──────
-        // FIX: duplicate "th" branch removed; all share handleAspirate()
-        } else if (lhst.endsWith("th")) { handleAspirate(result, prop, lhst, rhst, "N");
-        } else if (lhst.endsWith("dh")) { handleAspirate(result, prop, lhst, rhst, "N");
-        } else if (lhst.endsWith("ph")) { handleAspirate(result, prop, lhst, rhst, "M");
-        } else if (lhst.endsWith("bh")) { handleAspirate(result, prop, lhst, rhst, "M");
-        } else if (lhst.endsWith("gh")) { handleAspirate(result, prop, lhst, rhst, "G");
-        } else if (lhst.endsWith("kh")) { handleAspirate(result, prop, lhst, rhst, "G");
-        } else if (lhst.endsWith("jh")) { handleAspirate(result, prop, lhst, rhst, "J");
+        // ── Final Aspirates (th/T, dh/D, ph/P, bh/B, gh/G, kh/K, jh/J) ──────
+        // In SLP1, these are all 1 character, making slicing infinitely cleaner!
+        } else if (lhst.endsWith("T")) { handleAspirate(result, prop, lhst, rhst, "n");
+        } else if (lhst.endsWith("D")) { handleAspirate(result, prop, lhst, rhst, "n");
+        } else if (lhst.endsWith("P")) { handleAspirate(result, prop, lhst, rhst, "m");
+        } else if (lhst.endsWith("B")) { handleAspirate(result, prop, lhst, rhst, "m");
+        } else if (lhst.endsWith("G")) { handleAspirate(result, prop, lhst, rhst, "N");
+        } else if (lhst.endsWith("K")) { handleAspirate(result, prop, lhst, rhst, "N");
+        } else if (lhst.endsWith("J")) { handleAspirate(result, prop, lhst, rhst, "Y");
 
         // ── Final -p ────────────────────────────────────────────────────────
         } else if (lhst.endsWith("p")) {
-            if (rhst[0] === "z") {
-                handleZ(result, prop, lhst, rhst);
+            if (rhst[0] === "S") {
+                handleS(result, prop, lhst, rhst);
             } else if (NASALS.includes(rhst[0])) {
-                pushjoin(result, prop, lhst.slice(0, -1) + "M" + rhst);
+                pushjoin(result, prop, lhst.slice(0, -1) + "m" + rhst); 
             } else if (rhst[0] === "h") {
                 pushjoin(result, prop, lhst.slice(0, -1) + "bb" + rhst);
                 pushjoin(result, prop, lhst.slice(0, -1) + "b " + rhst);
@@ -277,16 +274,16 @@ function sandhi_join(arrs) {
 
         // ── Final -b ────────────────────────────────────────────────────────
         } else if (lhst.endsWith("b")) {
-            if (rhst[0] === "z") {
-                handleZ(result, prop, lhst, rhst);
+            if (rhst[0] === "S") {
+                handleS(result, prop, lhst, rhst);
             } else {
                 pushjoin(result, prop, lhst + " " + rhst);
             }
 
         // ── Final -d ────────────────────────────────────────────────────────
         } else if (lhst.endsWith("d")) {
-            if (rhst[0] === "z") {
-                handleZ(result, prop, lhst, rhst);
+            if (rhst[0] === "S") {
+                handleS(result, prop, lhst, rhst);
             } else if (rhst[0] === "h") {
                 pushjoin(result, prop, lhst.slice(0, -1) + "dd" + rhst);
                 pushjoin(result, prop, lhst.slice(0, -1) + "d " + rhst);
@@ -298,8 +295,8 @@ function sandhi_join(arrs) {
         } else if (lhst.endsWith("t")) {
             if (VOICED_INITIALS.includes(rhst[0])) {
                 pushjoin(result, prop, lhst.slice(0, -1) + "d" + rhst);
-            } else if (rhst[0] === "z") {
-                handleZ(result, prop, lhst, rhst);
+            } else if (rhst[0] === "S") {
+                handleS(result, prop, lhst, rhst);
             } else if (rhst[0] === "l") {
                 pushjoin(result, prop, lhst.slice(0, -1) + "l" + rhst);
             } else if (NASALS.includes(rhst[0])) {
@@ -308,10 +305,10 @@ function sandhi_join(arrs) {
                 pushjoin(result, prop, lhst.slice(0, -1) + "c" + rhst);
             } else if (rhst[0] === "j") {
                 pushjoin(result, prop, lhst.slice(0, -1) + "j" + rhst);
-            } else if (rhst[0] === "T") {
-                pushjoin(result, prop, lhst.slice(0, -1) + "T" + rhst);
-            } else if (rhst[0] === "D") {
-                pushjoin(result, prop, lhst.slice(0, -1) + "D" + rhst);
+            } else if (rhst[0] === "w") { // ṭ
+                pushjoin(result, prop, lhst.slice(0, -1) + "w" + rhst);
+            } else if (rhst[0] === "q") { // ḍ
+                pushjoin(result, prop, lhst.slice(0, -1) + "q" + rhst);
             } else if (rhst[0] === "h") {
                 pushjoin(result, prop, lhst.slice(0, -1) + "dd" + rhst);
                 pushjoin(result, prop, lhst.slice(0, -1) + "d " + rhst);
@@ -321,20 +318,20 @@ function sandhi_join(arrs) {
 
         // ── Final -j ────────────────────────────────────────────────────────
         } else if (lhst.endsWith("j")) {
-            if (rhst[0] === "z") {
-                handleZ(result, prop, lhst, rhst);
+            if (rhst[0] === "S") {
+                handleS(result, prop, lhst, rhst);
             } else if (NASALS.includes(rhst[0])) {
-                pushjoin(result, prop, lhst.slice(0, -1) + "J" + rhst);
+                pushjoin(result, prop, lhst.slice(0, -1) + "Y" + rhst); // ñ
             } else {
                 pushjoin(result, prop, lhst + " " + rhst);
             }
 
         // ── Final -g ────────────────────────────────────────────────────────
         } else if (lhst.endsWith("g")) {
-            if (rhst[0] === "z") {
-                handleZ(result, prop, lhst, rhst);
+            if (rhst[0] === "S") {
+                handleS(result, prop, lhst, rhst);
             } else if (NASALS.includes(rhst[0])) {
-                pushjoin(result, prop, lhst.slice(0, -1) + "G" + rhst);
+                pushjoin(result, prop, lhst.slice(0, -1) + "N" + rhst); // ṅ
             } else {
                 pushjoin(result, prop, lhst + " " + rhst);
             }
@@ -343,10 +340,10 @@ function sandhi_join(arrs) {
         } else if (lhst.endsWith("k")) {
             if (VOICED_INITIALS.includes(rhst[0])) {
                 pushjoin(result, prop, lhst.slice(0, -1) + "g" + rhst);
-            } else if (rhst[0] === "z") {
-                handleZ(result, prop, lhst, rhst);
+            } else if (rhst[0] === "S") {
+                handleS(result, prop, lhst, rhst);
             } else if (NASALS.includes(rhst[0])) {
-                pushjoin(result, prop, lhst.slice(0, -1) + "G" + rhst);
+                pushjoin(result, prop, lhst.slice(0, -1) + "N" + rhst); // ṅ
             } else if (rhst[0] === "l") {
                 pushjoin(result, prop, lhst.slice(0, -1) + "l" + rhst);
             } else if (rhst[0] === "h") {
@@ -361,9 +358,9 @@ function sandhi_join(arrs) {
             if (VOICED_INITIALS.includes(rhst[0])) {
                 pushjoin(result, prop, lhst.slice(0, -1) + "j" + rhst);
             } else if (NASALS.includes(rhst[0])) {
-                pushjoin(result, prop, lhst.slice(0, -1) + "J" + rhst);
-            } else if (rhst[0] === "z") {
-                handleZ(result, prop, lhst, rhst);
+                pushjoin(result, prop, lhst.slice(0, -1) + "Y" + rhst); // ñ
+            } else if (rhst[0] === "S") {
+                handleS(result, prop, lhst, rhst);
             } else if (rhst[0] === "h") {
                 pushjoin(result, prop, lhst.slice(0, -1) + "jj" + rhst);
                 pushjoin(result, prop, lhst.slice(0, -1) + "j " + rhst);
@@ -381,21 +378,20 @@ function sandhi_join(arrs) {
 
         // ── Final -n ────────────────────────────────────────────────────────
         } else if (lhst.endsWith("n")) {
-            // FIX: removed duplicate t/T conditions; each appears exactly once
             if (VOWELS.includes(rhst[0])) {
                 pushjoin(result, prop, lhst.slice(0, -1) + "nn" + rhst);
             } else if (rhst[0] === "t") {
                 pushjoin(result, prop, lhst.slice(0, -1) + "Ms" + rhst);
-            } else if (rhst[0] === "T") {
-                pushjoin(result, prop, lhst.slice(0, -1) + "MS" + rhst);
-            } else if (rhst[0] === "D") {
-                pushjoin(result, prop, lhst.slice(0, -1) + "N" + rhst);
+            } else if (rhst[0] === "w") { // ṭ
+                pushjoin(result, prop, lhst.slice(0, -1) + "Mz" + rhst); // Mṣ
+            } else if (rhst[0] === "q") { // ḍ
+                pushjoin(result, prop, lhst.slice(0, -1) + "R" + rhst);  // ṇ
             } else if (rhst[0] === "j") {
-                pushjoin(result, prop, lhst.slice(0, -1) + "J" + rhst);
+                pushjoin(result, prop, lhst.slice(0, -1) + "Y" + rhst);  // ñ
             } else if (rhst[0] === "c") {
-                pushjoin(result, prop, lhst.slice(0, -1) + "Mz" + rhst);
-            } else if (rhst[0] === "z") {
-                pushjoin(result, prop, lhst.slice(0, -1) + "Jch" + rhst.slice(1));
+                pushjoin(result, prop, lhst.slice(0, -1) + "MS" + rhst); // Mś
+            } else if (rhst[0] === "S") { // ś
+                pushjoin(result, prop, lhst.slice(0, -1) + "YC" + rhst.slice(1)); // ñC
             } else {
                 pushjoin(result, prop, lhst + " " + rhst);
             }
@@ -411,11 +407,9 @@ function sandhi_join(arrs) {
 
 // ─── Sequential sandhi over a word array ─────────────────────────────────────
 function join_all_sandhi(arrs) {
-    // FIX: guard against short arrays (crashed with < 2 elements before)
     if (arrs.length === 0) return [];
     if (arrs.length === 1) return [arrs[0].st];
 
-    // FIX: `resn` was an implicit global; replaced with reduce + flatMap
     return arrs.slice(1)
         .reduce(
             (prev, rhs) => prev.flatMap(lhs => sandhi_join([{ lhs, rhs }])),

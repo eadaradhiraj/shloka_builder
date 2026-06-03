@@ -8,9 +8,7 @@ const mahapranas   = {
     "ph": "P", "bh": "B"
 };
 const coda_only    = ["H", "M"];
-// Consonants that can form an aspirate (mahāprāṇa) with 'h': k,g,c,j,T,D,t,d,p,b
 const aspiratable  = new Set(["k", "g", "c", "j", "T", "D", "t", "d", "p", "b"]);
-
 
 function inverse(obj) {
     const ret = {};
@@ -20,14 +18,12 @@ function inverse(obj) {
     return ret;
 }
 
-
 function shiftch2aft(arr, si) {
     if (si === 0) return arr;
     arr[si]     = arr[si - 1].slice(-1) + arr[si];
     arr[si - 1] = arr[si - 1].slice(0, -1);
     return arr;
 }
-
 
 function syllabalize(st) {
     st = allreplace(st, mahapranas);
@@ -44,18 +40,13 @@ function syllabalize(st) {
         if (c !== ' ' || vowels.includes(next_ch)) {
 
             if (!vowels.includes(c)) {
-                // ── Consonant ──────────────────────────────────────────────
-
                 if (coda_only.includes(c)) {
-                    // Visarga / anusvāra — always coda, never opens new syllable
                     arr[si] += c;
                 } else {
                     if (split_next) {
                         if (!coda_consumed && !coda_only.includes(c) && !vowels.includes(next_ch)) {
-                            // Only take as coda if next char is also a consonant
                             coda_consumed = true;
                         } else if (!coda_only.includes(c)) {
-                            // Open new syllable
                             si += 1;
                             arr.push("");
                             split_next    = false;
@@ -63,16 +54,13 @@ function syllabalize(st) {
                         }
                     }
 
-
                     arr[si] += c;
 
                     if (c === "h" && si > 0 && aspiratable.has(arr[si - 1].slice(-1))) {
                         arr = shiftch2aft(arr, si);
                     }
                 }
-
             } else {
-                // ── Vowel ──────────────────────────────────────────────────
                 arr[si] += c;
 
                 if (arr[si].length === 1 && arr[si - 1] !== undefined) {
