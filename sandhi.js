@@ -52,7 +52,7 @@ function sandhi_join(arrs) {
         ) {
             if (lhst.endsWith("mU") || lhst.endsWith("mI")) {
                 pushjoin(result, prop, lhst + " " + rhst);
-            } else if (["e","E","o","O","i","I","u","U","c","d","q","h","g","l","m","b","n","p","t","w","y","v","A","S"].includes(rhst[0])) {
+            } else if (["e","E","o","O","i","I","u","U","c","d","q","h","g","l","m","b","n","p","t","w","y","r","v","A","S"].includes(rhst[0])) {
                 pushjoin(result, prop, lhst.slice(0, -1) + " " + rhst);
             } else if (rhst[0] === "a") {
                 pushjoin(result, prop, lhst.slice(0, -2) + "o'" + rhst.slice(1));
