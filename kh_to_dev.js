@@ -30,6 +30,29 @@ const actual_vowels_dict_dev = {
 const special_vowels_dict_dev = { 'M': 'ं', 'H': 'ः' };
 const space_period_dev = [' ', '.', '\n', '\t'];
 
+// --- REVERSE DICTIONARIES ---
+const dev_consonants = {
+    "क": "k", "ख": "kh", "ग": "g", "घ": "gh", "ङ": "G",
+    "च": "c", "छ": "ch", "ज": "j", "झ": "jh", "ञ": "J",
+    "ट": "T", "ठ": "Th", "ड": "D", "ढ": "Dh", "ण": "N",
+    "त": "t", "थ": "th", "द": "d", "ध": "dh", "न": "n",
+    "प": "p", "फ": "ph", "ब": "b", "भ": "bh", "म": "m",
+    "य": "y", "र": "r", "ल": "l", "व": "v", "श": "z",
+    "ष": "S", "स": "s", "ह": "h"
+};
+
+const dev_vowel_markers = {
+    'ा': 'A', 'ि': 'i', 'ी': 'I', 'ु': 'u', 'ू': 'U',
+    'ृ': 'R', 'ॄ': 'RR', 'े': 'e', 'ै': 'ai', 'ो': 'o', 'ौ': 'au'
+};
+
+const dev_actual_vowels = {
+    'अ': 'a', 'आ': 'A', 'इ': 'i', 'ई': 'I', 'उ': 'u', 'ऊ': 'U',
+    'ऋ': 'R', 'ॠ': 'RR', 'ए': 'e', 'ऐ': 'ai', 'ओ': 'o', 'औ': 'au'
+};
+
+const dev_special = { 'ं': 'M', 'ः': 'H', 'ऽ': "'", '।': '.' };
+
 // --- HELPERS ---
 function allreplace(retStr, obj) {
     const keys = Object.keys(obj).sort((a, b) => b.length - a.length);
@@ -75,6 +98,42 @@ function kh2dev(orig) {
             transstr += "।";
         } else {
             transstr += ch; 
+        }
+    }
+
+    return transstr;
+}
+
+
+
+// --- REVERSE FUNCTION ---
+function dev2kh(orig) {
+    let transstr = "";
+    
+    for (let i = 0; i < orig.length; i++) {
+        let ch = orig[i];
+
+        if (dev_consonants[ch]) {
+            // Append consonant with inherent 'a'
+            transstr += dev_consonants[ch] + "a";
+        } else if (dev_vowel_markers[ch]) {
+            // If it's a vowel marker, strip the preceding inherent 'a'
+            if (transstr.endsWith("a")) {
+                transstr = transstr.slice(0, -1);
+            }
+            transstr += dev_vowel_markers[ch];
+        } else if (ch === '्') {
+            // If it's a halant, strip the preceding inherent 'a'
+            if (transstr.endsWith("a")) {
+                transstr = transstr.slice(0, -1);
+            }
+        } else if (dev_actual_vowels[ch]) {
+            transstr += dev_actual_vowels[ch];
+        } else if (dev_special[ch]) {
+            transstr += dev_special[ch];
+        } else {
+            // Spaces, punctuation, and unrecognized characters
+            transstr += ch;
         }
     }
 
